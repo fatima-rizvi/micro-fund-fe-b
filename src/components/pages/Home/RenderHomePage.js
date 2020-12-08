@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../../common';
+//import { Button } from '../../common';
 import { Layout, Typography, Space, Divider } from 'antd';
+import SampleItem from '../Dashboard/SampleItem';
 
 const { Paragraph, Title } = Typography;
 
@@ -25,21 +26,11 @@ function RenderHomePage(props) {
       </Layout.Header>
       <Layout.Content>
         <Space direction="vertical" align="center" style={{ width: '100%' }}>
-          <Paragraph>
-            Replace this paragraph with a dashboard component.
-          </Paragraph>
-          <Paragraph>
-            Replace this paragraph with a dashboard component.
-          </Paragraph>
-          <Paragraph>
-            Replace this paragraph with a dashboard component.
-          </Paragraph>
-          <Paragraph>
-            Replace this paragraph with a dashboard component.
-          </Paragraph>
-          <Paragraph>
-            Replace this paragraph with a dashboard component.
-          </Paragraph>
+          <SampleItem render={true} />
+          <SampleItem render={false} />
+          <SampleItem render={true} />
+          <SampleItem render={true} />
+          <SampleItem render={false} />
         </Space>
       </Layout.Content>
     </Layout>
