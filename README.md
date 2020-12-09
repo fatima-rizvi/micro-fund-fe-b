@@ -40,6 +40,9 @@ Fetch the user profile with id `id`. Returns the following JSON object:
 ## GET /users/all
 For admin use. Fetches all user profiles and returns a list of objects shown above.
 
+## GET /user/current
+Fetches the user profile corresponding to the currently authenticated user.
+
 ## GET /org/{id}/users
 Fetches all user profiles associated with the organization `id` and returns a list of objects as above.
 
