@@ -40,13 +40,13 @@ Fetch the user profile with id `id`. Returns the following JSON object:
 ## GET /users/all
 For admin use. Fetches all user profiles and returns a list of objects shown above.
 
-## GET /user/current
+## GET /users/getuserinfo
 Fetches the user profile corresponding to the currently authenticated user.
 
 ## GET /org/{id}/users
 Fetches all user profiles associated with the organization `id` and returns a list of objects as above.
 
-## PUT /user/{id}
+## PATCH /users/user/{id}
 Update the user profile with id `id`. Expects the following JSON object:
 ```
 {
@@ -57,7 +57,7 @@ Update the user profile with id `id`. Expects the following JSON object:
 }
 ```
 
-## DELETE /user/{id}
+## DELETE /users/user/{id}
 Resets the user with id `id` to defaults, removing all profile information and permissions.
 
 ## GET /org/{id}
@@ -75,7 +75,7 @@ Fetch the organization profile with id `id`. Returns the following JSON object:
 ## GET /orgs/all
 For admin use. Fetches all organization profiles and returns a list of objects shown above.
 
-## PUT /org/{id}
+## PATCH /org/{id}
 Update the organization profile with id `id`. Expects the following JSON object:
 ```
 {
@@ -122,7 +122,7 @@ Create a new application. Expects the following JSON object:
 }
 ```
 
-## PUT /app/{id}
+## PATCH /app/{id}
 Update the application with id `id`. Expects the following JSON object:
 ```
 {
@@ -130,10 +130,10 @@ Update the application with id `id`. Expects the following JSON object:
 }
 ```
 
-## PUT /app/{id}/accept
+## PATCH /app/{id}/accept
 Accept the application with id `id`, changing the applicant's status accordingly.
 
-## PUT /app/{id}/reject
+## PATCH /app/{id}/reject
 Reject the application with id `id`.
 
 # Contributing
