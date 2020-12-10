@@ -1,4 +1,4 @@
-import { Space } from 'antd';
+import { Button, Space } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Title from 'antd/lib/typography/Title';
 import React, { useEffect, useState } from 'react';
@@ -41,6 +41,22 @@ export default props => {
     return data;
   }
 
+  // returns true if the local state is different from the most recent profile query, i.e., the user has entered data
+  function shouldSaveChanges() {
+    return (
+      name !== data.name ||
+      description !== data.description ||
+      imageUrl !== data.imageUrl ||
+      email !== data.email
+    );
+  }
+
+  function saveChanges() {
+    if (!shouldSaveChanges()) return;
+    // add mutation here
+    console.log('yay, you were saved');
+  }
+
   return shouldRender() ? (
     <div>
       <Space
@@ -59,6 +75,9 @@ export default props => {
         </Paragraph>
         <Paragraph editable={{ onChange: setImageUrl }}>{imageUrl}</Paragraph>
         <Paragraph editable={{ onChange: setEmail }}>{email}</Paragraph>
+        <Button disabled={!shouldSaveChanges()} onClick={saveChanges}>
+          Save Changes
+        </Button>
       </Space>
     </div>
   ) : (
