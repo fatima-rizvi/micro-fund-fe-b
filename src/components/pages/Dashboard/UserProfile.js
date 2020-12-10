@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Title from 'antd/lib/typography/Title';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
@@ -9,11 +9,17 @@ export default props => {
   // props
   const { userData } = props;
 
+  // state and queries
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [email, setEmail] = useState('');
+
   /*const { status, data, error } = useQuery('currentUser', () =>
         axiosWithAuth()(`/users/${userData?.userId}`)
     );*/
 
-  const data = {
+  const [data, setData] = useState({
     name: 'John Jacob',
     orgName: 'Jingleheimer Inc.',
     role: 'chief ninja',
@@ -21,7 +27,14 @@ export default props => {
       'I see a little silhouetto of a john, scaramuche however the song goes',
     imageUrl: 'I am an image.jpg',
     email: 'john@jingleheimer.com',
-  };
+  });
+
+  useEffect(() => {
+    setName(data.name);
+    setDescription(data.description);
+    setImageUrl(data.imageUrl);
+    setEmail(data.email);
+  }, [data]);
 
   // condition for the component to render - this might be because of the state of user data or something else
   function shouldRender() {
@@ -35,13 +48,17 @@ export default props => {
         align="center"
         style={{ border: '1px solid black' }}
       >
-        <Title level="3">{data.name}</Title>
+        <Title level={3} editable={{ onChange: setName }}>
+          {name}
+        </Title>
         <Paragraph>
           {data.role} of {data.orgName}
         </Paragraph>
-        <Paragraph>{data.description}</Paragraph>
-        <Paragraph>Profile image at {data.imageUrl}</Paragraph>
-        <Paragraph>Email: {data.email}</Paragraph>
+        <Paragraph editable={{ onChange: setDescription }}>
+          {description}
+        </Paragraph>
+        <Paragraph editable={{ onChange: setImageUrl }}>{imageUrl}</Paragraph>
+        <Paragraph editable={{ onChange: setEmail }}>{email}</Paragraph>
       </Space>
     </div>
   ) : (
