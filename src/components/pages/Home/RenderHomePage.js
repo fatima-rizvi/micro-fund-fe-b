@@ -11,7 +11,7 @@ const { Paragraph, Title } = Typography;
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
   const { status, data, error } = useQuery('currentUser', () =>
-    axiosWithAuth()('/user/current')
+    axiosWithAuth()('/users/getuserinfo')
   );
 
   useEffect(() => {
