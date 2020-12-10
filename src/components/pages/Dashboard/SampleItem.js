@@ -2,11 +2,11 @@ import React from 'react';
 
 export default props => {
   // props
-  const { render } = props;
+  const { userData } = props;
 
   // condition for the component to render - this might be because of the state of user data or something else
   function shouldRender() {
-    return render;
+    return userData;
   }
 
   return shouldRender() ? (

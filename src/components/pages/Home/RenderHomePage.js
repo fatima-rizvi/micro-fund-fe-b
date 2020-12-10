@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 //import { Button } from '../../common';
 import { Layout, Typography, Space, Divider } from 'antd';
@@ -10,10 +10,13 @@ const { Paragraph, Title } = Typography;
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
-  const { status, userData, error } = useQuery(
-    'currentUser',
-    axiosWithAuth().get('/user/current')
+  const { status, data, error } = useQuery('currentUser', () =>
+    axiosWithAuth()('/user/current')
   );
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <Layout>
@@ -33,11 +36,8 @@ function RenderHomePage(props) {
       </Layout.Header>
       <Layout.Content>
         <Space direction="vertical" align="center" style={{ width: '100%' }}>
-          <SampleItem render={true} />
-          <SampleItem render={false} />
-          <SampleItem render={true} />
-          <SampleItem render={true} />
-          <SampleItem render={false} />
+          <SampleItem userData={data} />
+          <SampleItem />
         </Space>
       </Layout.Content>
     </Layout>

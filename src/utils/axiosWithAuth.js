@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useOktaAuth } from '@okta/okta-react';
 
-export default () =>
+export default endUrl =>
   axios.create({
-    headers: {
+    /*headers: {
       Authorization: `Bearer ${useOktaAuth().authState.idToken}`,
-    },
-    baseURL: process.env.REACT_APP_API_URI,
+    },*/
+    //baseURL: process.env.REACT_APP_API_URI,
+    baseURL: `http://swapi.dev/api`, //${endUrl}`,
   });
