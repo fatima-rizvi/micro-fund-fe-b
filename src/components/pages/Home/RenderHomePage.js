@@ -1,34 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../../common';
+//import { Button } from '../../common';
+import { Layout, Typography, Space, Divider } from 'antd';
+import SampleItem from '../Dashboard/SampleItem';
+import { useQuery } from 'react-query';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+
+const { Paragraph, Title } = Typography;
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
+  const { status, data, error } = useQuery('currentUser', () =>
+    axiosWithAuth()('/users/getuserinfo')
+  );
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
-    <div>
-      <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1>
-      <div>
-        <p>
-          This is an example of a common example of how we'd like for you to
-          approach components.
-        </p>
-        <p>
-          <Link to="/profile-list">Profiles Example</Link>
-        </p>
-        <p>
-          <Link to="/example-list">Example List of Items</Link>
-        </p>
-        <p>
-          <Link to="/datavis">Data Visualizations Example</Link>
-        </p>
-        <p>
-          <Button
-            handleClick={() => authService.logout()}
-            buttonText="Logout"
-          />
-        </p>
-      </div>
-    </div>
+    <Layout>
+      <Layout.Header>
+        <Space direction="vertical" align="center" style={{ width: '100%' }}>
+          <Space size="large" split={<Divider type="vertical" />}>
+            <Title>Microfund</Title>
+            <Paragraph>{userInfo.name}</Paragraph>
+            <Paragraph>
+              <Link to="/">Dashboard</Link>
+            </Paragraph>
+            <Paragraph>
+              <Link onClick={() => authService.logout()}>Log Out</Link>
+            </Paragraph>
+          </Space>
+        </Space>
+      </Layout.Header>
+      <Layout.Content>
+        <Space direction="vertical" align="center" style={{ width: '100%' }}>
+          <SampleItem userData={data} />
+          <SampleItem />
+        </Space>
+      </Layout.Content>
+    </Layout>
   );
 }
 export default RenderHomePage;
