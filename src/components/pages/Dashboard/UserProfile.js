@@ -24,18 +24,6 @@ export default props => {
 
   const queryClient = useQueryClient();
 
-  // dummy data
-
-  // const [data, setData] = useState({
-  //   name: 'John Jacob',
-  //   orgName: 'Jingleheimer Inc.',
-  //   role: 'chief ninja',
-  //   description:
-  //     'I see a little silhouetto of a john, scaramuche however the song goes',
-  //   imageUrl: 'I am an image.jpg',
-  //   email: 'john@jingleheimer.com',
-  // });
-
   useEffect(() => {
     setName(data?.name);
     setDescription(data?.description);
