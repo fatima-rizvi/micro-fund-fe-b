@@ -5,18 +5,15 @@ import { Layout, Typography, Space, Divider } from 'antd';
 import SampleItem from '../Dashboard/SampleItem';
 import { useQuery } from 'react-query';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
+import UserProfile from '../Dashboard/UserProfile';
 
 const { Paragraph, Title } = Typography;
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
-  const { status, data, error } = useQuery('currentUser', () =>
-    axiosWithAuth()('/users/getuserinfo')
-  );
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // const { status, data, error } = useQuery('currentUser', () =>
+  //   axiosWithAuth()('/users/getuserinfo')
+  // );
 
   return (
     <Layout>
@@ -36,7 +33,7 @@ function RenderHomePage(props) {
       </Layout.Header>
       <Layout.Content>
         <Space direction="vertical" align="center" style={{ width: '100%' }}>
-          <SampleItem userData={data} />
+          <UserProfile />
           <SampleItem />
         </Space>
       </Layout.Content>
