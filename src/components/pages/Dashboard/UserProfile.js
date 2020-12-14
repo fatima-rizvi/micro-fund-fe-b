@@ -1,8 +1,9 @@
+import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import { Button, Space } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Title from 'antd/lib/typography/Title';
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 export default props => {
@@ -15,9 +16,13 @@ export default props => {
   const [imageUrl, setImageUrl] = useState('');
   const [email, setEmail] = useState('');
 
-  const { status, data, error } = useQuery('currentUser', () =>
-    axiosWithAuth()(`/users/${userData?.userId}`)
+  const auth = useOktaAuth();
+
+  const { isLoading, data, error } = useQuery('currentUser', async () =>
+    axiosWithAuth(auth.authState.idToken).get(`/users/getuserinfo`)
   );
+
+  const queryClient = useQueryClient();
 
   // dummy data
 
@@ -32,10 +37,10 @@ export default props => {
   // });
 
   useEffect(() => {
-    setName(data.name);
-    setDescription(data.description);
-    setImageUrl(data.imageUrl);
-    setEmail(data.email);
+    setName(data?.name);
+    setDescription(data?.description);
+    setImageUrl(data?.imageUrl);
+    setEmail(data?.email);
   }, [data]);
 
   // mutations
@@ -43,7 +48,12 @@ export default props => {
     axiosWithAuth().patch(`users/${userData?.userId}`, user);
   };
 
-  const [mutate, { isLoading }] = useMutation(patchUser);
+  const mutation = useMutation(patchUser, {
+    onSuccess: () => {
+      // when user data is successfully edited, inform the query client that its cached result is no longer valid
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
 
   // condition for the component to render - this might be because of the state of user data or something else
   function shouldRender() {
@@ -66,7 +76,7 @@ export default props => {
     console.log('yay, you were saved');
 
     try {
-      await mutate({ name, description, imageUrl, email });
+      await mutation({ name, description, imageUrl, email });
     } catch (error) {}
   }
 
@@ -91,7 +101,7 @@ export default props => {
         <Button
           disabled={!shouldSaveChanges()}
           onClick={saveChanges}
-          loading={isLoading}
+          loading={mutation.isLoading}
         >
           Save Changes
         </Button>
