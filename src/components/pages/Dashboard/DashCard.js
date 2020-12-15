@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../../common/Header';
+import Profile from '../../common/Profile';
 import MyUsersCard from '../../common/MyUsers';
 import { PageHeader, Button, Descriptions } from 'antd';
 
@@ -16,8 +16,8 @@ const DashCardStyle = styled.div`
 function DashCard() {
   return (
     <DashCardStyle>
-      <h2>User's Dashboard</h2>
-      <Header />
+      <h2>user_id dashboard</h2>
+      <Profile />
       <MyUsersCard />
     </DashCardStyle>
   );
