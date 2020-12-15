@@ -8,7 +8,6 @@ const FormStyle = styled.div`
   margin: 10px;
   padding: 10px;
   background: #d5f2bb;
-  box-szing: boarder-box;
   height: 100%;
 `;
 
