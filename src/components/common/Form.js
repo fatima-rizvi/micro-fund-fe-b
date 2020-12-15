@@ -47,7 +47,7 @@ function AppForm() {
       <Form.Item
         name={['user', 'Funding amount desired']}
         label="Funding amount desired"
-        rules={[{ type: 'number', min: 0, max: 99 }]}
+        rules={[{ type: 'number', required: true }]}
       >
         <InputNumber />
       </Form.Item>
