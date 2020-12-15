@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { useOktaAuth } from '@okta/okta-react';
 
-export default endUrl =>
+export default idToken =>
   axios.create({
     headers: {
-      Authorization: `Bearer ${useOktaAuth().authState.idToken}`,
+      Authorization: `Bearer ${idToken}`,
     },
     baseURL: process.env.REACT_APP_API_URI,
   });

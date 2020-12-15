@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-
 import { config } from '../../../utils/oktaConfig';
+import microLogo from '../../../images/microLogo.png';
 
 const LoginContainer = () => {
   useEffect(() => {
@@ -17,11 +17,16 @@ const LoginContainer = () => {
       },
       features: { registration: false },
       // turning this feature on allows your widget to use Okta for user registration
-      logo: 'path-to-your-logo',
+      logo: 'https://image.freepik.com/free-vector/piggy-bank_53876-25494.jpg',
+      colors: {
+        brand: '#d5f2bb',
+      },
+
       // add your custom logo to your signing/register widget here.
       i18n: {
         en: {
-          'primaryauth.title': 'Welcome to Labs Basic SPA Please sign in',
+          'primaryauth.title': 'Welcome to MicroFund',
+          'primaryauth.submit': 'Sign In',
           // change title for your app
         },
       },
