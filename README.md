@@ -1,92 +1,140 @@
-# Basic SPA Micro Fund
+# Microfund
 
-For steps on how to work with this repository [please see here](https://docs.labs.lambdaschool.com/labs-spa-starter/)
-
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your first Pull-Request is merged. This is intended to be a guideline. Feel free to add your own flare to it.
-
-# Title of project goes here
-
-You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+Check us out on [Amplify](https://b.microfund.dev/).
 
 ## Contributors
 
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
-
-|                                                      [Student 1](https://github.com/)                                                       |                                                       [Student 2](https://github.com/)                                                        |                                                      [Student 3](https://github.com/)                                                       |                                                       [Student 4](https://github.com/)                                                        |                                                      [Student 5](https://github.com/)                                                       |
-| :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) |
-|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)                            |
-|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |
+|                                                      [Kate McGee](https://github.com/KateAnn19)                                                       |                                                       [Shanon Fritz](https://github.com/sfritz24)                                                        |                                                      [Sam Kester](https://github.com/samkester)                                                       |                                                       [Anthony Navarro](https://github.com/arn-foto)                                                       |
+|:-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars1.githubusercontent.com/u/48461273" width = "200" />](https://github.com/KateAnn19) | [<img src="https://avatars0.githubusercontent.com/u/64600578" width = "200" />](https://github.com/sfritz24) | [<img src="https://avatars1.githubusercontent.com/u/3655547" width = "200" />](https://github.com/samkester) | [<img src="https://avatars3.githubusercontent.com/u/38259824" width = "200" />](https://github.com/arn-foto) |
+|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/KateAnn19)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/sfritz24)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/samkester)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/arn-foto)                           |
+|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/kate-mcgee/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/shanon-fritz/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sam-kester/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/anthonyrnavarro/)                 |
 
 <br>
-<br>
 
-🚫 Optional examples of using images with links for your tech stack, make sure to change these to fit your project
+## Key Features
 
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
-![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
-
-🚫 more info on using badges [here](https://github.com/badges/shields)
-
-- Fork and clone the repo to install it as your own remote.
-  - **note** please [be sure to set your remote](https://help.github.jp/enterprise/2.11/user/articles/changing-a-remote-s-url/) for this repo to point to your Labs Team Front End Repository.
-- run: `npm install` to download all dependencies.
-- run: `npm start` to start your local development server.
-
-> When using Okta for authentication, the app will need to run locally on port 3000.
-
-### Key Features
-
-- feature one
-- feature two
-- feature three
-- feature four
-- feature five
-
-#### Front end deployed to `🚫insert service here`
-
-#### [Back end](🚫link to back end repo here) built using:
-
-#### 🚫 back end framework goes here
-
-- point one
-- point two
-- point three
-
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
+- Users and organizations can create and update public-facing profiles.
+- Users can apply to join organizations as a microentrepreneur.
+- Users can apply to create a new partner organization.
+- Admins for an organization can accept or reject applications.
 
 # APIs
 
-## Authentication API here
+## GET /user/{id}
+Fetch the user profile with id `id`. Returns the following JSON object:
 
-🚫Replace text below with a description of the API
+```
+{
+	userId: long
+	name: string
+	role: string
+	orgId: string
+	orgName: string
+	description: string
+	imageUrl: string
+	email: string
+}
+```
 
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
+## GET /users/all
+For admin use. Fetches all user profiles and returns a list of objects shown above.
 
-## Payment API here
+## GET /users/getuserinfo
+Fetches the user profile corresponding to the currently authenticated user.
 
-🚫Replace text below with a description of the API
+## GET /org/{id}/users
+Fetches all user profiles associated with the organization `id` and returns a list of objects as above.
 
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
+## PATCH /users/user/{id}
+Update the user profile with id `id`. Expects the following JSON object:
+```
+{
+	name: string
+	description: string
+	imageUrl: string
+	email: string
+}
+```
 
-## Misc API here
+## DELETE /users/user/{id}
+Resets the user with id `id` to defaults, removing all profile information and permissions.
 
-🚫Replace text below with a description of the API
+## GET /org/{id}
+Fetch the organization profile with id `id`. Returns the following JSON object:
+```
+{
+	orgId: long
+	name: string
+	description: string
+	imageUrl: string
+	email: string
+}
+```
 
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
+## GET /orgs/all
+For admin use. Fetches all organization profiles and returns a list of objects shown above.
 
-# Installation Instructions
+## PATCH /org/{id}
+Update the organization profile with id `id`. Expects the following JSON object:
+```
+{
+	name: string
+	description: string
+	imageUrl: string
+	email: string
+}
+```
 
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+## DELETE /org/{id}
+Deletes the organization with id `id`.
 
-## Other Scripts
+## GET  /app/{id}
+Fetch the application with id `id`. Returns the following JSON object:
+```
+{
+	appId: long
+	userId: long
+	orgId: long
+	type: string
+	status: string
+	userInput: string
+}
+```
 
-🚫replace these examples with your own
+## GET /apps/all
+For admin use. Fetches all applications and returns a list of objects shown above.
 
-    * build - creates a build of the application
-    * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
+## GET /user/{id}/apps
+Fetches all applications belonging to the user `id` and returns a list of objects as above.
+
+## GET /org/{id}/apps
+Fetches all applications associated with the organization `id` and returns a list of objects as above.
+
+## POST /app/new
+Create a new application. Expects the following JSON object:
+```
+{
+	userId: long
+	orgId: long
+	type: string
+	userInput: string
+}
+```
+
+## PATCH /app/{id}
+Update the application with id `id`. Expects the following JSON object:
+```
+{
+	userInput: string
+}
+```
+
+## PATCH /app/{id}/accept
+Accept the application with id `id`, changing the applicant's status accordingly.
+
+## PATCH /app/{id}/reject
+Reject the application with id `id`.
 
 # Contributing
 
