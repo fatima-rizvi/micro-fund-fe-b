@@ -29,18 +29,14 @@ const { Paragraph, Title } = Typography;
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
-  const { status, data, error } = useQuery('currentUser', () =>
-    axiosWithAuth()('/users/getuserinfo')
-  );
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // const { status, data, error } = useQuery('currentUser', () =>
+  //   axiosWithAuth()('/users/getuserinfo')
+  // );
 
   return (
     <div className="title">
       <LandingNav>
-        <img src={logo} alt="MicoFund Logo" className="header-logo" />
+        <img src={logo} alt="MicroFund Logo" className="header-logo" />
         <div className="welcome-style"> Welcome back, {userInfo.name}!</div>
 
         <Link to="/AppCard">Apply</Link>
