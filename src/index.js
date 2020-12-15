@@ -20,7 +20,7 @@ import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import AppCard from './components/pages/Dashboard/AppCard';
-import Header from '../src/components/common/Header';
+import Profile from '../src/components/common/Profile';
 
 ReactDOM.render(
   <Router>
@@ -59,7 +59,6 @@ function App() {
         <SecureRoute path="/example-list" component={ExampleListPage} />
         <SecureRoute path="/profile-list" component={ProfileListPage} />
         <SecureRoute path="/datavis" component={ExampleDataViz} />
-        <Route component={AppCard} />
         <SecureRoute path="/AppCard" component={AppCard} />
       </Switch>
     </Security>
