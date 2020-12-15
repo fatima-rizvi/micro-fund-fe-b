@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const FooterStyle = styled.div`
   display: flex;
   box-shadow: 2px 2px 2px grey;
-  margin: 20px;
-  padding: 20px;
-  background: lightblue;
+  margin: 10px;
+  padding: 10px;
+  background: #d5f2bb;
 `;
 
 function Footer() {
