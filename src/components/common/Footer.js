@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const FooterStyle = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 2px 2px 2px grey;
   margin: 10px;
   padding: 10px;
@@ -12,7 +14,7 @@ const FooterStyle = styled.div`
 function Footer() {
   return (
     <FooterStyle>
-      <h2>Footer</h2>
+      <h5>MicroFund 2020</h5>
     </FooterStyle>
   );
 }
