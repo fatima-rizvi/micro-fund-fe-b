@@ -19,21 +19,31 @@ export default props => {
   const auth = useOktaAuth();
 
   const { isLoading, data, error } = useQuery('currentUser', async () =>
-    axiosWithAuth(auth.authState.idToken).get(`/users/getuserinfo`)
+    axiosWithAuth(auth.authState.accessToken).get(`/users/getuserinfo`)
   );
 
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setName(data?.name);
-    setDescription(data?.description);
-    setImageUrl(data?.imageUrl);
-    setEmail(data?.email);
+    console.log(data);
+    console.log(data?.data);
+    setName(data?.data?.username);
+    setDescription(data?.data?.description);
+    setImageUrl(data?.data?.imageUrl);
+    setEmail(data?.data?.email);
   }, [data]);
 
   // mutations
-  const patchUser = ({ user }) => {
-    axiosWithAuth().patch(`users/${userData?.userId}`, user);
+  const patchUser = () => {
+    console.log(`saving user ${data?.data?.userid}`);
+    return axiosWithAuth(
+      auth.authState.accessToken
+    ).patch(`users/user/${data?.data?.userid}`, {
+      username: name,
+      description,
+      imageUrl,
+      userid: data?.data?.userid,
+    });
   };
 
   const mutation = useMutation(patchUser, {
@@ -58,13 +68,13 @@ export default props => {
     );
   }
 
-  async function saveChanges() {
+  function saveChanges() {
     if (!shouldSaveChanges()) return;
 
     console.log('yay, you were saved');
 
     try {
-      await mutation({ name, description, imageUrl, email });
+      mutation.mutate();
     } catch (error) {}
   }
 

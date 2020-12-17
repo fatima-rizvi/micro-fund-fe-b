@@ -11,6 +11,10 @@ import {
   Collapse,
 } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
+import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import axiosWithAuth from '../../utils/axiosWithAuth';
+import { useEffect } from 'react';
 
 // Styles
 const ProfileStyle = styled.div`
@@ -91,33 +95,33 @@ const IconLink = ({ src, text }) => (
 );
 
 //dummy data - will be replacing with actual API data once back-end is set up.
-const content = (
-  <>
-    <Paragraph>
-      {' '}
-      <p>userInput_id</p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
-      eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
-      bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
-      tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
-      sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-      Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
-      quis posuere ut, pulvinar vitae dolor.
-    </Paragraph>
+// const content = (
+//   <>
+//     <Paragraph>
+//       {' '}
+//       <p>userInput_id</p>
+//       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
+//       eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
+//       bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
+//       tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
+//       sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+//       Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
+//       quis posuere ut, pulvinar vitae dolor.
+//     </Paragraph>
 
-    <div>
-      <IconLink
-        src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-        text="email_id"
-      />
-      <p></p>
-      <IconLink
-        src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-        text="company_id"
-      />
-    </div>
-  </>
-);
+//     <div>
+//       <IconLink
+//         src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+//         text="email_id"
+//       />
+//       <p></p>
+//       <IconLink
+//         src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+//         text="company_id"
+//       />
+//     </div>
+//   </>
+// );
 
 const Content = ({ children, extraContent }) => (
   <Row>
@@ -130,28 +134,89 @@ function callback(key) {
   console.log(key);
 }
 
+const defaultUserData = {
+  username: 'guest',
+  userid: -1,
+  description: '',
+  role: 'guest',
+  orgid: -1,
+  orgName: 'no organization',
+  imageUrl: '',
+  email: '',
+};
+
 function Profile() {
+  // query
+  const auth = useOktaAuth();
+  const queryClient = useQueryClient();
+
+  const { isLoading, data, error } = useQuery('currentUser', () => {
+    console.log(auth.authState.accessToken);
+    return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
+  });
+
+  // transfer results of query into local state (for editable fields)
+  const [userData, setUserData] = useState(defaultUserData);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    console.log(data?.data);
+    if (data?.data) {
+      setUserData(data.data);
+    }
+  }, [data]);
+
+  // mutation
+  const patchUser = () => {
+    return axiosWithAuth(auth.authState.accessToken).patch(
+      `users/user/${userData.userid}`,
+      userData
+    );
+  };
+
+  const mutation = useMutation(patchUser, {
+    onSuccess: () => {
+      // when user data is successfully changed, notify query client that it should refetch user data
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
+
+  // event handlers
+  const editDescription = text => {
+    setUserData({ ...userData, description: text });
+  };
+
+  const toggleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const submitUserData = () => {
+    mutation.mutate();
+  };
+
   return (
     <ProfileStyle>
-      <h4>user_id profile</h4>
+      <h4>{userData.username}'s profile</h4>
       <Collapse ghost="true" onChange={callback}>
         <Panel>
           <PageHeader
-            title="org_name"
+            title={userData.role}
             className="site-page-header"
-            subTitle="org_id"
+            subTitle={userData.orgName ?? 'no organization'}
             tags={<Tag color="blue">Actively Funding</Tag>}
             extra={[
-              <Button key="1" type="primary">
-                Edit
+              <Button key="1" type="primary" onClick={toggleIsEditing}>
+                {isEditing ? 'Cancel' : 'Edit'}
               </Button>,
-              <Button key="2" type="primary">
+              <Button key="2" type="primary" onClick={submitUserData}>
                 Save
               </Button>,
               <DropdownMenu key="more" />,
             ]}
             avatar={{
-              src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
+              src: userData.imageUrl
+                ? userData.imageUrl
+                : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
             }}
             breadcrumb={{ routes }}
           >
@@ -164,10 +229,25 @@ function Profile() {
                 />
               }
             >
-              {content}
+              <Paragraph
+                editable={isEditing ? { onChange: editDescription } : false}
+              >
+                {userData.description}
+              </Paragraph>
+              <div>
+                <IconLink
+                  src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+                  text={userData.email ?? 'no email'}
+                />
+              </div>
+              <div>
+                <IconLink
+                  src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+                  text={userData.orgName ?? 'no organization'}
+                />
+              </div>
             </Content>
           </PageHeader>
-          ,
         </Panel>
       </Collapse>
     </ProfileStyle>
