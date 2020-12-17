@@ -182,9 +182,8 @@ function Profile() {
   });
 
   // event handlers
-  const editUserData = event => {
-    console.log(event.target);
-    setUserData({ ...userData, [event.target.name]: event.target.value });
+  const editDescription = text => {
+    setUserData({ ...userData, description: text });
   };
 
   const toggleIsEditing = () => {
@@ -201,15 +200,15 @@ function Profile() {
       <Collapse ghost="true" onChange={callback}>
         <Panel>
           <PageHeader
-            title="org_name"
+            title={userData.role}
             className="site-page-header"
-            subTitle="org_id"
+            subTitle={userData.orgName ?? 'no organization'}
             tags={<Tag color="blue">Actively Funding</Tag>}
             extra={[
-              <Button key="1" type="primary">
-                Edit
+              <Button key="1" type="primary" onClick={toggleIsEditing}>
+                {isEditing ? 'Cancel' : 'Edit'}
               </Button>,
-              <Button key="2" type="primary">
+              <Button key="2" type="primary" onClick={submitUserData}>
                 Save
               </Button>,
               <DropdownMenu key="more" />,
@@ -230,15 +229,21 @@ function Profile() {
                 />
               }
             >
-              <Paragraph>{userData.description}</Paragraph>
+              <Paragraph
+                editable={isEditing ? { onChange: editDescription } : false}
+              >
+                {userData.description}
+              </Paragraph>
               <div>
                 <IconLink
                   src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-                  text={userData.email}
+                  text={userData.email ?? 'no email'}
                 />
+              </div>
+              <div>
                 <IconLink
                   src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-                  text={userData.orgName}
+                  text={userData.orgName ?? 'no organization'}
                 />
               </div>
             </Content>
