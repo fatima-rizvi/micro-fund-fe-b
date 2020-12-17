@@ -9,7 +9,7 @@ const DashCardStyle = styled.div`
   margin: 10px;
   padding: 10px;
   background: #d5f2bb;
-  box-szing: boarder-box;
+  box-sizing: border-box;
   height: 100%;
 `;
 
