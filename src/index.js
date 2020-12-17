@@ -37,7 +37,14 @@ function App() {
   // React Router has a nifty useHistory hook we can use at this level to ensure we have security around our routes.
   const history = useHistory();
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: 600000,
+      },
+    },
+  });
 
   const authHandler = () => {
     // We pass this to our <Security /> component that wraps our routes.
