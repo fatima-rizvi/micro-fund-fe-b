@@ -95,33 +95,33 @@ const IconLink = ({ src, text }) => (
 );
 
 //dummy data - will be replacing with actual API data once back-end is set up.
-const content = (
-  <>
-    <Paragraph>
-      {' '}
-      <p>userInput_id</p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
-      eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
-      bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
-      tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
-      sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-      Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
-      quis posuere ut, pulvinar vitae dolor.
-    </Paragraph>
+// const content = (
+//   <>
+//     <Paragraph>
+//       {' '}
+//       <p>userInput_id</p>
+//       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
+//       eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
+//       bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
+//       tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
+//       sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+//       Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
+//       quis posuere ut, pulvinar vitae dolor.
+//     </Paragraph>
 
-    <div>
-      <IconLink
-        src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-        text="email_id"
-      />
-      <p></p>
-      <IconLink
-        src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-        text="company_id"
-      />
-    </div>
-  </>
-);
+//     <div>
+//       <IconLink
+//         src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+//         text="email_id"
+//       />
+//       <p></p>
+//       <IconLink
+//         src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+//         text="company_id"
+//       />
+//     </div>
+//   </>
+// );
 
 const Content = ({ children, extraContent }) => (
   <Row>
@@ -151,6 +151,7 @@ function Profile() {
   const queryClient = useQueryClient();
 
   const { isLoading, data, error } = useQuery('currentUser', () => {
+    console.log(auth.authState.accessToken);
     return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
   });
 
@@ -196,7 +197,7 @@ function Profile() {
 
   return (
     <ProfileStyle>
-      <h4>user_id profile</h4>
+      <h4>{userData.username}'s profile</h4>
       <Collapse ghost="true" onChange={callback}>
         <Panel>
           <PageHeader
@@ -214,7 +215,9 @@ function Profile() {
               <DropdownMenu key="more" />,
             ]}
             avatar={{
-              src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
+              src: userData.imageUrl
+                ? userData.imageUrl
+                : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
             }}
             breadcrumb={{ routes }}
           >
@@ -227,10 +230,19 @@ function Profile() {
                 />
               }
             >
-              {content}
+              <Paragraph>{userData.description}</Paragraph>
+              <div>
+                <IconLink
+                  src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+                  text={userData.email}
+                />
+                <IconLink
+                  src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+                  text={userData.orgName}
+                />
+              </div>
             </Content>
           </PageHeader>
-          ,
         </Panel>
       </Collapse>
     </ProfileStyle>
