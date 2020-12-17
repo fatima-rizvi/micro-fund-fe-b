@@ -11,6 +11,10 @@ import {
   Collapse,
 } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
+import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import axiosWithAuth from '../../utils/axiosWithAuth';
+import { useEffect } from 'react';
 
 // Styles
 const ProfileStyle = styled.div`
@@ -130,7 +134,66 @@ function callback(key) {
   console.log(key);
 }
 
+const defaultUserData = {
+  username: 'guest',
+  userid: -1,
+  description: '',
+  role: 'guest',
+  orgid: -1,
+  orgName: 'no organization',
+  imageUrl: '',
+  email: '',
+};
+
 function Profile() {
+  // query
+  const auth = useOktaAuth();
+  const queryClient = useQueryClient();
+
+  const { isLoading, data, error } = useQuery('currentUser', () => {
+    return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
+  });
+
+  // transfer results of query into local state (for editable fields)
+  const [userData, setUserData] = useState(defaultUserData);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    console.log(data?.data);
+    if (data?.data) {
+      setUserData(data.data);
+    }
+  }, [data]);
+
+  // mutation
+  const patchUser = () => {
+    return axiosWithAuth(auth.authState.accessToken).patch(
+      `users/user/${userData.userid}`,
+      userData
+    );
+  };
+
+  const mutation = useMutation(patchUser, {
+    onSuccess: () => {
+      // when user data is successfully changed, notify query client that it should refetch user data
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
+
+  // event handlers
+  const editUserData = event => {
+    console.log(event.target);
+    setUserData({ ...userData, [event.target.name]: event.target.value });
+  };
+
+  const toggleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const submitUserData = () => {
+    mutation.mutate();
+  };
+
   return (
     <ProfileStyle>
       <h4>user_id profile</h4>
