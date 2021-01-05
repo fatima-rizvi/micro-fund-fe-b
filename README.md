@@ -12,129 +12,87 @@ Check us out on [Amplify](https://b.microfund.dev/).
 
 <br>
 
-## Key Features
+# Features
+- Users can create, edit, and view their profile.
+- Users can create applications to join an organization.
+- Users can be associated with an organization and can have entrepreneur or admin roles.
+- Admins can view applications to join their organization.
 
-- Users and organizations can create and update public-facing profiles.
-- Users can apply to join organizations as a microentrepreneur.
-- Users can apply to create a new partner organization.
-- Admins for an organization can accept or reject applications.
+## API
 
-# APIs
+See API documentation [here](https://github.com/Lambda-School-Labs/micro-fund-be-b/blob/main/README.md).
 
-## GET /user/{id}
-Fetch the user profile with id `id`. Returns the following JSON object:
+## React Query
 
-```
-{
-	userId: long
-	name: string
-	role: string
-	orgId: string
-	orgName: string
-	description: string
-	imageUrl: string
-	email: string
-}
-```
+Microfund uses [React Query](https://react-query.tanstack.com/overview) to manage state. This implementation has three major parts:
 
-## GET /users/all
-For admin use. Fetches all user profiles and returns a list of objects shown above.
-
-## GET /users/getuserinfo
-Fetches the user profile corresponding to the currently authenticated user.
-
-## GET /org/{id}/users
-Fetches all user profiles associated with the organization `id` and returns a list of objects as above.
-
-## PATCH /users/user/{id}
-Update the user profile with id `id`. Expects the following JSON object:
-```
-{
-	name: string
-	description: string
-	imageUrl: string
-	email: string
-}
+### Client
+`src/index.js` creates the query client, which stores state. The `QueryClientProvider` component, like a Redux `Provider`, provides the query client to all of the app's components. The `defaultOptions` field contains global settings for React Query.
+```js
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: 600000,
+      },
+    },
+  });
 ```
 
-## DELETE /users/user/{id}
-Resets the user with id `id` to defaults, removing all profile information and permissions.
+### Queries
+`src/components/common/Profile.js` implements a sample query.
 
-## GET /org/{id}
-Fetch the organization profile with id `id`. Returns the following JSON object:
-```
-{
-	orgId: long
-	name: string
-	description: string
-	imageUrl: string
-	email: string
-}
-```
+`currentUser` is the query key. If multiple components have queries referring to the same key, React Query treats them as the same query. If the app received a reply to that query earlier it will reuse that data rather than sending a new request.
 
-## GET /orgs/all
-For admin use. Fetches all organization profiles and returns a list of objects shown above.
+Because the user profile is editable, we must declare local state `userData` to store user input. The `useEffect` hook feeds information from the query to local state when the query is updated.
 
-## PATCH /org/{id}
-Update the organization profile with id `id`. Expects the following JSON object:
-```
-{
-	name: string
-	description: string
-	imageUrl: string
-	email: string
-}
+```js
+  const { isLoading, data, error } = useQuery('currentUser', () => {
+    return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
+  });
+
+  // transfer results of query into local state (for editable fields)
+  const [userData, setUserData] = useState(defaultUserData);
+  
+  useEffect(() => {
+    if (data?.data) {
+      setUserData(data.data);
+    }
+  }, [data]);
 ```
 
-## DELETE /org/{id}
-Deletes the organization with id `id`.
+### Mutations
+`src/components/common/Profile.js` implements a mutation, which React Query uses to modify server state.
 
-## GET  /app/{id}
-Fetch the application with id `id`. Returns the following JSON object:
+`patchUser` is a wrapper for the HTTP request itself, in this case an Axios `.patch` call using the Okta accessToken and a local state variable. (See `userData` above.)
+
+`mutation` applies React Query settings to the request. For example, `onSuccess` is a callback function invoked when the server sends back a reply with a successful (2xx) status. `invalidateQueries` tells React Query that the "currentUser" query result (see above) is out of date.
+
+The event handler uses `mutation.mutate()` to invoke the request with all of its React Query settings.
+
+```js
+  const queryClient = useQueryClient();
+
+  // mutation
+  const patchUser = () => {
+    return axiosWithAuth(auth.authState.accessToken).patch(
+      `users/user/${userData.userid}`,
+      userData
+    );
+  };
+
+  const mutation = useMutation(patchUser, {
+    onSuccess: () => {
+      // when user data is successfully changed, notify query client that it should refetch user data
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
+
+  // event handlers
+  const submitUserData = () => {
+    mutation.mutate();
+  };
 ```
-{
-	appId: long
-	userId: long
-	orgId: long
-	type: string
-	status: string
-	userInput: string
-}
-```
-
-## GET /apps/all
-For admin use. Fetches all applications and returns a list of objects shown above.
-
-## GET /user/{id}/apps
-Fetches all applications belonging to the user `id` and returns a list of objects as above.
-
-## GET /org/{id}/apps
-Fetches all applications associated with the organization `id` and returns a list of objects as above.
-
-## POST /app/new
-Create a new application. Expects the following JSON object:
-```
-{
-	userId: long
-	orgId: long
-	type: string
-	userInput: string
-}
-```
-
-## PATCH /app/{id}
-Update the application with id `id`. Expects the following JSON object:
-```
-{
-	userInput: string
-}
-```
-
-## PATCH /app/{id}/accept
-Accept the application with id `id`, changing the applicant's status accordingly.
-
-## PATCH /app/{id}/reject
-Reject the application with id `id`.
 
 # Contributing
 
