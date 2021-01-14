@@ -2,6 +2,10 @@
 
 Check us out on [Amplify](https://b.microfund.dev/).
 
+## Documentation Video
+
+https://youtu.be/I_OjgwKNQdI
+
 ## Contributors
 
 |                                                      [Kate McGee](https://github.com/KateAnn19)                                                       |                                                       [Shanon Fritz](https://github.com/sfritz24)                                                        |                                                      [Sam Kester](https://github.com/samkester)                                                       |                                                       [Anthony Navarro](https://github.com/arn-foto)                                                       |
