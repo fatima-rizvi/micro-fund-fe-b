@@ -6,6 +6,13 @@ Please include a summary of the change or new features. Please also include rele
 
 Fixes # (issue)
 
+## Trello link (and other relavent links)
+
+To get the link of a trello card, click on the card to open it up. Go to the actions
+on the lower right, select "share", and paste the link here.
+
+**Trello card:**
+
 ## Type of change
 
 Please delete options that are not relevant.
