@@ -11,7 +11,8 @@ Fixes # (issue)
 To get the link of a Trello card, click on the card to open it up. Go to the actions
 on the lower right, select "share", and paste the link here.
 
-**Trello card:**
+[Trello Card](paste link here)
+[Description of other link](paste link here)
 
 ## Type of change
 
