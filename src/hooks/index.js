@@ -12,3 +12,17 @@ const getUserInfo = async auth => {
 export function useUserInfo(auth) {
   return useQuery('currentUser', () => getUserInfo(auth));
 }
+
+export function patchUser(auth, userData) {
+  const token = auth.authState.accessToken;
+  return axiosWithAuth(token).patch(`users/user/${userData.userid}`, userData);
+}
+
+export function useTheMutation(auth, userData) {
+  const queryClient = useQueryClient();
+  return useMutation(patchUser(auth, userData), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
+}

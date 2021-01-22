@@ -15,7 +15,7 @@ import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useEffect } from 'react';
-
+import { useUserInfo, patchUser, useTheMutation } from '../../hooks';
 // Styles
 const ProfileStyle = styled.div`
   box-shadow: 2px 2px 2px grey;
@@ -150,10 +150,11 @@ function Profile() {
   const auth = useOktaAuth();
   const queryClient = useQueryClient();
 
-  const { isLoading, data, error } = useQuery('currentUser', () => {
-    console.log(auth.authState.accessToken);
-    return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
-  });
+  const { isLoading, data, error } = useUserInfo(auth);
+  // useQuery('currentUser', () => {
+  //   console.log(auth.authState.accessToken);
+  //   return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
+  // });
 
   // transfer results of query into local state (for editable fields)
   const [userData, setUserData] = useState(defaultUserData);
@@ -167,19 +168,20 @@ function Profile() {
   }, [data]);
 
   // mutation
-  const patchUser = () => {
-    return axiosWithAuth(auth.authState.accessToken).patch(
-      `users/user/${userData.userid}`,
-      userData
-    );
-  };
+  // const patchUser = () => {
+  //   return axiosWithAuth(auth.authState.accessToken).patch(
+  //     `users/user/${userData.userid}`,
+  //     userData
+  //   );
+  // };
 
-  const mutation = useMutation(patchUser, {
-    onSuccess: () => {
-      // when user data is successfully changed, notify query client that it should refetch user data
-      queryClient.invalidateQueries('currentUser');
-    },
-  });
+  const mutation = useTheMutation(auth, userData);
+  // useMutation(patchUser(auth, userData), {
+  //   onSuccess: () => {
+  //     // when user data is successfully changed, notify query client that it should refetch user data
+  //     queryClient.invalidateQueries('currentUser');
+  //   },
+  // });
 
   // event handlers
   const editDescription = text => {
