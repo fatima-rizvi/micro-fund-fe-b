@@ -12,10 +12,8 @@ import {
 } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useEffect } from 'react';
-import { useUserInfo, useTheMutation, useUserHook } from '../../hooks';
+import { useUserHook } from '../../hooks';
 // Styles
 const ProfileStyle = styled.div`
   box-shadow: 2px 2px 2px grey;

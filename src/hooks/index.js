@@ -1,7 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import axiosWithAuth from '../utils/axiosWithAuth';
-import useOktaAuth from '@okta/okta-react/dist/OktaContext';
-import { useState } from 'react';
 
 // GET request for /users/getuserinfo
 const getUserInfo = async auth => {
