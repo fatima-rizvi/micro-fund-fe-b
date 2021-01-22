@@ -13,6 +13,7 @@ function CompactApp({ app }) {
 
   const showModal = () => {
     setModalState({
+      ...modalState,
       visible: true,
     });
   };
@@ -20,7 +21,7 @@ function CompactApp({ app }) {
   const handleOk = e => {
     console.log(e);
 
-    setModalState({ loading: true });
+    setModalState({ ...modalState, loading: true });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
     }, 3000);
@@ -36,7 +37,7 @@ function CompactApp({ app }) {
   return (
     <div>
       <Button type="primary" onClick={showModal}>
-        Open Modal with customized footer
+        {app.name} {app.organization.name} {app.status}
       </Button>
       <Modal
         visible={modalState.visible}
@@ -45,7 +46,6 @@ function CompactApp({ app }) {
         onCancel={handleSubmit}
         footer={[
           <Button key="back" onClick={handleSubmit}>
-            {' '}
             {/*Change handleSubmit to later work to reject apps*/}
             Reject
           </Button>,
