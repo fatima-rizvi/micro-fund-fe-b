@@ -24,7 +24,7 @@ function CompactApp({ app }) {
     setModalState({ ...modalState, loading: true });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
-    }, 3000);
+    }, 1000);
   };
 
   const handleSubmit = e => {
@@ -37,7 +37,11 @@ function CompactApp({ app }) {
   return (
     <div>
       <Button type="primary" onClick={showModal}>
-        {app.name} {app.organization.name} {app.status}
+        <p>
+          {app.name} {app.organization.name} {app.status}
+        </p>
+        {/* <p>{app.organization.name}</p>
+        <p>{app.status}</p> */}
       </Button>
       <Modal
         visible={modalState.visible}
