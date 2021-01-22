@@ -15,7 +15,7 @@ import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useEffect } from 'react';
-import { useUserInfo, patchUser, useTheMutation } from '../../hooks';
+import { useUserInfo, useTheMutation, useUserHook } from '../../hooks';
 // Styles
 const ProfileStyle = styled.div`
   box-shadow: 2px 2px 2px grey;
@@ -94,35 +94,6 @@ const IconLink = ({ src, text }) => (
   </a>
 );
 
-//dummy data - will be replacing with actual API data once back-end is set up.
-// const content = (
-//   <>
-//     <Paragraph>
-//       {' '}
-//       <p>userInput_id</p>
-//       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
-//       eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
-//       bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
-//       tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
-//       sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-//       Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
-//       quis posuere ut, pulvinar vitae dolor.
-//     </Paragraph>
-
-//     <div>
-//       <IconLink
-//         src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-//         text="email_id"
-//       />
-//       <p></p>
-//       <IconLink
-//         src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-//         text="company_id"
-//       />
-//     </div>
-//   </>
-// );
-
 const Content = ({ children, extraContent }) => (
   <Row>
     <div style={{ flex: 1 }}>{children}</div>
@@ -148,13 +119,9 @@ const defaultUserData = {
 function Profile() {
   // query
   const auth = useOktaAuth();
-  const queryClient = useQueryClient();
-
-  const { isLoading, data, error } = useUserInfo(auth);
-  // useQuery('currentUser', () => {
-  //   console.log(auth.authState.accessToken);
-  //   return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
-  // });
+  //const queryClient = useQueryClient();
+  const [{ isLoading, data, error }, mutation] = useUserHook(auth);
+  //const { isLoading, data, error } = useUserInfo(auth);
 
   // transfer results of query into local state (for editable fields)
   const [userData, setUserData] = useState(defaultUserData);
@@ -167,23 +134,7 @@ function Profile() {
     }
   }, [data]);
 
-  // mutation
-  // const patchUser = () => {
-  //   return axiosWithAuth(auth.authState.accessToken).patch(
-  //     `users/user/${userData.userid}`,
-  //     userData
-  //   );
-  // };
-
-  // I realize an auth variable is suddenly injected here
-  // this is terrible design
-  // I tried to add it, but mutation.mutate only passes the first argument
-  const mutation = useMutation(userData => patchUser(auth, userData), {
-    onSuccess: () => {
-      // when user data is successfully changed, notify query client that it should refetch user data
-      queryClient.invalidateQueries('currentUser');
-    },
-  });
+  //const mutation = useTheMutation(auth);
 
   // event handlers
   const editDescription = text => {
@@ -195,11 +146,6 @@ function Profile() {
   };
 
   const submitUserData = userData => {
-    // I think this is wrong!
-    // the mutate() should have the new data as an argument?
-    // that's what the docs show!
-    console.log(userData);
-    console.log('TESTESTEST');
     mutation.mutate(userData);
   };
 
