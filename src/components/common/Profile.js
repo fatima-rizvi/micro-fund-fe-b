@@ -175,13 +175,15 @@ function Profile() {
   //   );
   // };
 
-  const mutation = useTheMutation(auth, userData);
-  // useMutation(patchUser(auth, userData), {
-  //   onSuccess: () => {
-  //     // when user data is successfully changed, notify query client that it should refetch user data
-  //     queryClient.invalidateQueries('currentUser');
-  //   },
-  // });
+  // I realize an auth variable is suddenly injected here
+  // this is terrible design
+  // I tried to add it, but mutation.mutate only passes the first argument
+  const mutation = useMutation(userData => patchUser(auth, userData), {
+    onSuccess: () => {
+      // when user data is successfully changed, notify query client that it should refetch user data
+      queryClient.invalidateQueries('currentUser');
+    },
+  });
 
   // event handlers
   const editDescription = text => {
@@ -192,8 +194,13 @@ function Profile() {
     setIsEditing(!isEditing);
   };
 
-  const submitUserData = () => {
-    mutation.mutate();
+  const submitUserData = userData => {
+    // I think this is wrong!
+    // the mutate() should have the new data as an argument?
+    // that's what the docs show!
+    console.log(userData);
+    console.log('TESTESTEST');
+    mutation.mutate(userData);
   };
 
   return (
@@ -210,7 +217,11 @@ function Profile() {
               <Button key="1" type="primary" onClick={toggleIsEditing}>
                 {isEditing ? 'Cancel' : 'Edit'}
               </Button>,
-              <Button key="2" type="primary" onClick={submitUserData}>
+              <Button
+                key="2"
+                type="primary"
+                onClick={() => submitUserData(userData)}
+              >
                 Save
               </Button>,
               <DropdownMenu key="more" />,

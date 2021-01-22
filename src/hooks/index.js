@@ -15,6 +15,8 @@ export function useUserInfo(auth) {
 
 export function patchUser(auth, userData) {
   const token = auth.authState.accessToken;
+  console.log('AND THE USER ID IS');
+  console.log(userData);
   return axiosWithAuth(token).patch(`users/user/${userData.userid}`, userData);
 }
 
