@@ -19,8 +19,8 @@ function patchUser(auth, userData) {
 
 // returns a mutation function that will update server state
 // with the object given as an argument
-// it will then invalidate 'currentUser' triggering an automatic
-// update to the server state 'currentUser' kept by react query.
+// it will then invalidate 'user' triggering an automatic
+// update to the server state 'user' kept by react query.
 function useMutationforUser(auth) {
   const queryClient = useQueryClient();
   return useMutation(userData => patchUser(auth, userData), {
@@ -35,6 +35,6 @@ function useMutationforUser(auth) {
 // 'isLoading', 'error', and data in 'data'
 // index 1 will be the mutation that can be invoked via
 // .mutate(userData)
-export default function useUserQuery(auth) {
+export function useUserQuery(auth) {
   return [useQuery('user', () => getUserInfo(auth)), useMutationforUser(auth)];
 }

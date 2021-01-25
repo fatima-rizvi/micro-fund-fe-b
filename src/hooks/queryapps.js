@@ -8,20 +8,18 @@ react-query hook to keep track of multiple apps. The idea is that main admins an
 // GET request for applications to specified org.
 async function getApps(auth, orgid) {
   const token = auth.authState.accessToken;
-  const response = await axiosWithAuth(token).get(`/orgs/org/${orgid}/apps`);
-  return response;
+  return await axiosWithAuth(token).get(`/orgs/org/${orgid}/apps`);
 }
 
 // PATCH for an application
 function patchApp(auth, appData) {
   const token = auth.authState.accessToken;
-  console.log(appData);
   return axiosWithAuth(token).patch(`apps/app/${appData.appid}`, appData);
 }
 
-// returns a mutation function that will update server state
+// returns a mutation function that will update backend
 // with the object given as an argument. it will then
-// invalidate ['Appsinfo', orgid] triggering an automatic
+// invalidate ['apps', orgid] triggering an automatic
 // update to the server state kept by react query.
 function useMutationForApp(auth, orgid) {
   const queryClient = useQueryClient();
@@ -37,7 +35,7 @@ function useMutationForApp(auth, orgid) {
 // 'isLoading', 'error', and returned data in 'data'
 // index 1 will be the mutation that can be invoked via
 // .mutate(appData)
-export default function useAppsQuery(auth, orgid) {
+export function useAppsQuery(auth, orgid) {
   return [
     useQuery(['apps', orgid], () => getApps(auth, orgid)),
     useMutationForApp(auth, orgid),
