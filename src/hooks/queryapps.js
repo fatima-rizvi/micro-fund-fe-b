@@ -23,7 +23,7 @@ function patchApp(auth, appData) {
 // with the object given as an argument. it will then
 // invalidate ['Appsinfo', orgid] triggering an automatic
 // update to the server state kept by react query.
-export function useMutationForApp(auth, orgid) {
+function useMutationForApp(auth, orgid) {
   const queryClient = useQueryClient();
   return useMutation(appData => patchApp(auth, appData), {
     onSuccess: () => {
@@ -37,7 +37,7 @@ export function useMutationForApp(auth, orgid) {
 // 'isLoading', 'error', and returned data in 'data'
 // index 1 will be the mutation that can be invoked via
 // .mutate(appData)
-export function useAppsQuery(auth, orgid) {
+export default function useAppsQuery(auth, orgid) {
   return [
     useQuery(['apps', orgid], () => getApps(auth, orgid)),
     useMutationForApp(auth, orgid),
