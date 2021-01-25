@@ -36,7 +36,7 @@ function CompactApp({ app }) {
 
   return (
     <div>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={showModal} className="short app">
         <p>
           {app.name} {app.organization.name} {app.status}
         </p>
@@ -48,6 +48,7 @@ function CompactApp({ app }) {
         title="Title"
         onOk={handleOk}
         onCancel={handleSubmit}
+        centered
         footer={[
           <Button key="back" onClick={handleSubmit}>
             {/*Change handleSubmit to later work to reject apps*/}
