@@ -40,7 +40,7 @@ function useMutationForOrg(auth, orgid) {
 // index 0 will be an object with various fields including
 // 'isLoading', 'error', and returned data in 'data'
 // index 1 will be the mutation that can be invoked via
-// .mutate(appData)
+// .mutate(orgData)
 export function useOrgQuery(auth, orgid) {
   return [
     useQuery(['orgs', orgid], () => getOrg(auth, orgid)),
