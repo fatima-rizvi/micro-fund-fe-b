@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import {} from "antd";
 import ReactDOM from 'react-dom';
 import { Modal, Button } from 'antd';
+import './search.css';
 
 function CompactApp({ app }) {
   console.log(app);
@@ -36,16 +37,14 @@ function CompactApp({ app }) {
 
   return (
     <div>
-      <Button type="primary" onClick={showModal} className="short app">
-        <p>
-          {app.name} {app.organization.name} {app.status}
-        </p>
-        {/* <p>{app.organization.name}</p>
-        <p>{app.status}</p> */}
+      <Button type="primary" onClick={showModal} className="short-app">
+        <p>{app.name}</p>
+        <p>{app.organization.name}</p>
+        <p>{app.status}</p>
       </Button>
       <Modal
         visible={modalState.visible}
-        title="Title"
+        title={app.name}
         onOk={handleOk}
         onCancel={handleSubmit}
         centered

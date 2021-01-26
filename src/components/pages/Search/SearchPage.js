@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import {} from "antd";
 import ReactDOM from 'react-dom';
 import CompactApp from './CompactApp';
+import './search.css';
 
 const appData = [
   {
@@ -101,11 +102,17 @@ const appData = [
 
 function SearchPage() {
   return (
-    <div>
-      <h1> Hi! SearchPage</h1>
-      {appData.map(application => (
-        <CompactApp key={application.appid} app={application} />
-      ))}
+    <div className="search-page">
+      <div className="all-short-apps">
+        <div className="short-apps-header">
+          <p>Name</p>
+          <p>Organization Name</p>
+          <p>Status</p>
+        </div>
+        {appData.map(application => (
+          <CompactApp key={application.appid} app={application} />
+        ))}
+      </div>
     </div>
   );
 }
