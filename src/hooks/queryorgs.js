@@ -1,26 +1,44 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import axios from 'axios';
 
 /*
 react-query hooks to keep track of org/s. We're going to need to be able to just generically get all orgs, so a possible participant can see all the different orgs. We'll also want to query one at a time, and be able to patch them, so someone can update their orgs information.
 */
 
+// GET request for all orgs, no auth
+async function getOrgsNoAuth() {
+  return axios.get(`${process.env.REACT_APP_API_URI}/orgs/all`);
+}
+
 // GET request for all orgs.
 async function getOrgs(auth) {
-  const token = auth.authState.accessToken;
-  return await axiosWithAuth(token).get(`/orgs/all`);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).get(`/orgs/all`);
+    })
+    .catch(error => console.error(error));
 }
 
 // GET request for a single org.
 async function getOrg(auth, orgid) {
-  const token = auth.authState.accessToken;
-  return await axiosWithAuth(token).get(`/orgs/org/${orgid}`);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).get(`/orgs/org/${orgid}`);
+    })
+    .catch(error => console.error(error));
 }
 
 // PATCH for an org
-function patchOrg(auth, orgData) {
-  const token = auth.authState.accessToken;
-  return axiosWithAuth(token).patch(`orgs/org/${orgData.orgid}`, orgData);
+async function patchOrg(auth, orgData) {
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).patch(`orgs/org/${orgData.orgid}`, orgData);
+    })
+    .catch(error => console.error(error));
 }
 
 // returns a mutation function that will update server state

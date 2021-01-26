@@ -7,14 +7,25 @@ React-query hook to get and update the current users information. Should be able
 
 // GET request for /users/getuserinfo
 async function getUserInfo(auth) {
-  const token = auth.authState.accessToken;
-  return await axiosWithAuth(token).get(`/users/getuserinfo`);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).get(`/users/getuserinfo`);
+    })
+    .catch(error => console.error(error));
 }
 
 //  PATCH request to update userinfo
 function patchUser(auth, userData) {
-  const token = auth.authState.accessToken;
-  return axiosWithAuth(token).patch(`users/user/${userData.userid}`, userData);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).patch(
+        `users/user/${userData.userid}`,
+        userData
+      );
+    })
+    .catch(error => console.error(error));
 }
 
 // returns a mutation function that will update server state

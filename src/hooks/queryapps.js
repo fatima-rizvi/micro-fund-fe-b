@@ -7,14 +7,22 @@ react-query hook to keep track of multiple apps. The idea is that main admins an
 
 // GET request for applications to specified org.
 async function getApps(auth, orgid) {
-  const token = auth.authState.accessToken;
-  return await axiosWithAuth(token).get(`/orgs/org/${orgid}/apps`);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).get(`/orgs/org/${orgid}/apps`);
+    })
+    .catch(error => console.error(error));
 }
 
 // PATCH for an application
 function patchApp(auth, appData) {
-  const token = auth.authState.accessToken;
-  return axiosWithAuth(token).patch(`apps/app/${appData.appid}`, appData);
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).patch(`apps/app/${appData.appid}`, appData);
+    })
+    .catch(error => console.error(error));
 }
 
 // returns a mutation function that will update backend
