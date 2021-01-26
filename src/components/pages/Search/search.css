@@ -1,0 +1,36 @@
+.search-page{
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+}
+
+.all-short-apps {
+    width: 100%;
+    margin: auto;
+}
+
+.short-apps-header{
+    width: 60%;
+    margin: auto;
+    padding:.5rem;
+    text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+    background-color: rgb(75, 135, 247);
+}
+
+.short-app {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgb(32, 32, 224);
+    border: 2px solid rgba(21, 21, 143, 0.733);
+}
