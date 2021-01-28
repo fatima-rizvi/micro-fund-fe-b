@@ -4,18 +4,13 @@ import { useOrgsQuery, useUserQuery } from '../../hooks';
 import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import styled from 'styled-components';
 import OrgComponent from './Org';
-import { Card } from 'antd';
+import { Card, Row, Col, Space, Typography } from 'antd';
+
+const { Title } = Typography;
 
 const OrgCardStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   margin: 10%;
-  padding: 10px;
-  box-sizing: border-box;
-  height: 100%;
   text-align: center;
-  background-color: '@primary-color';
 `;
 
 export default function OrgCards() {
@@ -24,7 +19,9 @@ export default function OrgCards() {
   const { isLoading, data, error } = useOrgsQuery(auth, id);
 
   if (isLoading) return <h2>...Loading</h2>;
+  else if (error) return <h2>{error}</h2>;
   else console.log(data);
+  //TEMPORARY description data
   data.data.forEach(
     org =>
       (org.description =
@@ -32,11 +29,19 @@ export default function OrgCards() {
   );
   return (
     <OrgCardStyle>
-      {data.data.map(orgData => (
-        <Card size="small">
-          <OrgComponent orgData={orgData} editable="true" />
-        </Card>
-      ))}
+      <Title level={1}>Partner Organizations</Title>
+      <Row justify="space-around" gutter={[24, 24]}>
+        {data.data.map(orgData => {
+          orgData.description = orgData.description.slice(0, 128) + '...';
+          return (
+            <Col key={orgData.orgid} flex="0 0 400px">
+              <Card>
+                <OrgComponent orgData={orgData} editable="true" />
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
     </OrgCardStyle>
   );
 }
