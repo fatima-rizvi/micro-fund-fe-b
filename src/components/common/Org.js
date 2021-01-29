@@ -23,7 +23,7 @@ export default function Org(props) {
         <Button type="link" href={`tel:${orgData.phone}`}>
           {orgData.phone}
         </Button>
-        <Button size="large" type="primary">
+        <Button size="large" type="primary" href={`/AppCard/${orgData.orgid}`}>
           Apply
         </Button>
         {orgData.description.split('\n').map((pg, i) => (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useOktaAuth } from '@okta/okta-react';
 import { useQueryClient } from 'react-query';
@@ -30,7 +30,8 @@ function postAppData(auth, appData) {
 }
 
 // This is just completely wrong.
-function AppCard({ orgId }) {
+function AppCard() {
+  const { orgid } = useParams();
   const auth = useOktaAuth();
   const queryClient = useQueryClient();
   const [formState, setFormState] = useState({
@@ -51,7 +52,7 @@ function AppCard({ orgId }) {
     e.preventDefault();
     postAppData(auth, {
       ...formState,
-      organization: { orgid: 4 },
+      organization: { orgid },
     });
     queryClient.invalidateQueries('user');
   };

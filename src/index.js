@@ -74,7 +74,7 @@ function App() {
           <SecureRoute path="/example-list" component={ExampleListPage} />
           <SecureRoute path="/profile-list" component={ProfileListPage} />
           <SecureRoute path="/datavis" component={ExampleDataViz} />
-          <SecureRoute path="/AppCard" component={AppCard} />
+          <SecureRoute path="/AppCard/:orgid" component={AppCard} />
           <SecureRoute path="/search" component={SearchPage} />
         </Switch>
       </QueryClientProvider>
