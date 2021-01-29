@@ -11,11 +11,9 @@ import {
   Collapse,
 } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
-import { useOktaAuth } from '@okta/okta-react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import axiosWithAuth from '../../utils/axiosWithAuth';
+import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import { useEffect } from 'react';
-
+import { useUserQuery } from '../../hooks';
 // Styles
 const ProfileStyle = styled.div`
   box-shadow: 2px 2px 2px grey;
@@ -94,35 +92,6 @@ const IconLink = ({ src, text }) => (
   </a>
 );
 
-//dummy data - will be replacing with actual API data once back-end is set up.
-// const content = (
-//   <>
-//     <Paragraph>
-//       {' '}
-//       <p>userInput_id</p>
-//       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl
-//       eros, pulvinar facilisis justo mollis, auctor consequat urna. Morbi a
-//       bibendum metus. Donec scelerisque sollicitudin enim eu venenatis. Duis
-//       tincidunt laoreet ex, in pretium orci vestibulum eget. Class aptent taciti
-//       sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-//       Duis pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus, lacinia
-//       quis posuere ut, pulvinar vitae dolor.
-//     </Paragraph>
-
-//     <div>
-//       <IconLink
-//         src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
-//         text="email_id"
-//       />
-//       <p></p>
-//       <IconLink
-//         src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-//         text="company_id"
-//       />
-//     </div>
-//   </>
-// );
-
 const Content = ({ children, extraContent }) => (
   <Row>
     <div style={{ flex: 1 }}>{children}</div>
@@ -148,12 +117,10 @@ const defaultUserData = {
 function Profile() {
   // query
   const auth = useOktaAuth();
-  const queryClient = useQueryClient();
-
-  const { isLoading, data, error } = useQuery('currentUser', () => {
-    console.log(auth.authState.accessToken);
-    return axiosWithAuth(auth.authState.accessToken).get('/users/getuserinfo');
-  });
+  //const queryClient = useQueryClient();
+  const [{ isLoading, data, error }, mutation] = useUserQuery(useOktaAuth());
+  console.log(data);
+  //const { isLoading, data, error } = useUserInfo(auth);
 
   // transfer results of query into local state (for editable fields)
   const [userData, setUserData] = useState(defaultUserData);
@@ -166,20 +133,7 @@ function Profile() {
     }
   }, [data]);
 
-  // mutation
-  const patchUser = () => {
-    return axiosWithAuth(auth.authState.accessToken).patch(
-      `users/user/${userData.userid}`,
-      userData
-    );
-  };
-
-  const mutation = useMutation(patchUser, {
-    onSuccess: () => {
-      // when user data is successfully changed, notify query client that it should refetch user data
-      queryClient.invalidateQueries('currentUser');
-    },
-  });
+  //const mutation = useTheMutation(auth);
 
   // event handlers
   const editDescription = text => {
@@ -190,8 +144,8 @@ function Profile() {
     setIsEditing(!isEditing);
   };
 
-  const submitUserData = () => {
-    mutation.mutate();
+  const submitUserData = userData => {
+    mutation.mutate(userData);
   };
 
   return (
@@ -208,7 +162,11 @@ function Profile() {
               <Button key="1" type="primary" onClick={toggleIsEditing}>
                 {isEditing ? 'Cancel' : 'Edit'}
               </Button>,
-              <Button key="2" type="primary" onClick={submitUserData}>
+              <Button
+                key="2"
+                type="primary"
+                onClick={() => submitUserData(userData)}
+              >
                 Save
               </Button>,
               <DropdownMenu key="more" />,

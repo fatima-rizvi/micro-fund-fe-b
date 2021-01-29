@@ -21,6 +21,9 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import AppCard from './components/pages/Dashboard/AppCard';
 import Profile from '../src/components/common/Profile';
+import Org from './components/pages/Org/Org';
+import OrgCards from './components/common/OrgCards';
+import SearchPage from './components/pages/Search/SearchPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 ReactDOM.render(
@@ -60,7 +63,8 @@ function App() {
           <Route path="/implicit/callback" component={LoginCallback} />
           <Route path="/landing" component={LandingPage} />
           {/* any of the routes you need secured should be registered as SecureRoutes */}
-
+          <SecureRoute path="/org/:id" component={Org} />
+          <SecureRoute path="/cards" component={OrgCards} />
           <SecureRoute
             path="/"
             exact
@@ -71,6 +75,7 @@ function App() {
           <SecureRoute path="/profile-list" component={ProfileListPage} />
           <SecureRoute path="/datavis" component={ExampleDataViz} />
           <SecureRoute path="/AppCard" component={AppCard} />
+          <SecureRoute path="/search" component={SearchPage} />
         </Switch>
       </QueryClientProvider>
     </Security>

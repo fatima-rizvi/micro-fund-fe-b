@@ -12,7 +12,7 @@ function HomeContainer({ LoadingComponent }) {
   useEffect(() => {
     let isSubscribed = true;
 
-    memoAuthService
+    authService
       .getUser()
       .then(info => {
         // if user is authenticated we can use the authService to snag some user info.
@@ -26,7 +26,7 @@ function HomeContainer({ LoadingComponent }) {
         return setUserInfo(null);
       });
     return () => (isSubscribed = false);
-  }, [memoAuthService]);
+  }, [authService]);
 
   return (
     <>
