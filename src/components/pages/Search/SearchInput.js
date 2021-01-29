@@ -1,104 +1,91 @@
 import React, { useState, useEffect } from 'react';
 // import {} from "antd";
 import ReactDOM from 'react-dom';
-import { Form, Input, Button, Select, Space, Radio } from 'antd';
-import { AudioOutlined } from '@ant-design/icons';
 
-const { Search } = Input;
-
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: '#1890ff',
-    }}
-  />
-);
-
+import {
+  Form,
+  Select,
+  Input,
+  InputNumber,
+  Switch,
+  Radio,
+  Slider,
+  Button,
+  Upload,
+  Rate,
+  Checkbox,
+  Row,
+  Col,
+} from 'antd';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 const { Option } = Select;
-
-const layout = {
+const formItemLayout = {
   labelCol: {
-    span: 8,
+    span: 6,
   },
   wrapperCol: {
-    span: 16,
+    span: 14,
   },
 };
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+
+//   const normFile = (e) => {
+//     console.log('Upload event:', e);
+
+//     if (Array.isArray(e)) {
+//       return e;
+//     }
+
+//     return e && e.fileList;
+//   };
 
 const SearchInput = () => {
-  const [form] = Form.useForm();
-
-  const [radioValue, setRadioValue] = React.useState('');
-
-  const onChange = e => {
-    console.log('radio checked', e.target.value);
-    setRadioValue(e.target.value);
-  };
-
-  const onSearch = value => console.log(value);
-
   const onFinish = values => {
-    console.log('onFinish: ', values);
-    // console.log(radioValue);
-  };
-
-  const onReset = () => {
-    form.resetFields();
-  };
-
-  const onFill = () => {
-    form.setFieldsValue({
-      name: 'Hello world!',
-      status: 'interesting',
-    });
+    console.log('Received values of form: ', values);
   };
 
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+    <Form
+      name="validate_other"
+      {...formItemLayout}
+      onFinish={onFinish}
+      // initialValues={{
+      //   ['input-number']: 3,
+      //   ['checkbox-group']: ['A', 'B'],
+      //   rate: 3.5,
+      // }}
+    >
+      {/* <Form.Item label="Plain Text">
+          <span className="ant-form-text">Filter applications:</span>
+        </Form.Item> */}
       <Form.Item
+        label="Name:"
         name="name"
-        label="Name"
         rules={[
           {
             required: false,
+            message: 'Enter name...',
           },
         ]}
       >
-        <Search
-          placeholder="input name"
-          onSearch={onSearch}
-          style={{ width: 200 }}
-        />
+        <Input size="small" placeholder="Enter name..." />
       </Form.Item>
-      <Form.Item
-        name="status"
-        label="Status"
-        rules={[
-          {
-            required: false,
-          },
-        ]}
-      >
-        <Radio.Group onChange={onChange} value={radioValue}>
-          <Radio value={'pending'}>Pending</Radio>
-          <Radio value={'accepted'}>Accepted</Radio>
-          <Radio value={'rejected'}>Rejected</Radio>
+
+      <Form.Item name="radio-group" label="Status">
+        <Radio.Group>
+          <Radio value="pending">Pending</Radio>
+          <Radio value="accepted">Accepted</Radio>
+          <Radio value="rejected">Rejected</Radio>
         </Radio.Group>
+      </Form.Item>
+
+      <Form.Item
+        wrapperCol={{
+          span: 12,
+          offset: 6,
+        }}
+      >
         <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
+          Filter
         </Button>
       </Form.Item>
     </Form>
