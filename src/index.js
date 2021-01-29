@@ -21,6 +21,7 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import AppCard from './components/pages/Dashboard/AppCard';
 import Profile from '../src/components/common/Profile';
+import SearchPage from './components/pages/Search/SearchPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 ReactDOM.render(
@@ -71,6 +72,7 @@ function App() {
           <SecureRoute path="/profile-list" component={ProfileListPage} />
           <SecureRoute path="/datavis" component={ExampleDataViz} />
           <SecureRoute path="/AppCard" component={AppCard} />
+          <SecureRoute path="/search" component={SearchPage} />
         </Switch>
       </QueryClientProvider>
     </Security>
