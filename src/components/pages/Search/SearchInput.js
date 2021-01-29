@@ -1,24 +1,7 @@
-import React, { useState, useEffect } from 'react';
-// import {} from "antd";
-import ReactDOM from 'react-dom';
+import React from 'react';
 
-import {
-  Form,
-  Select,
-  Input,
-  InputNumber,
-  Switch,
-  Radio,
-  Slider,
-  Button,
-  Upload,
-  Rate,
-  Checkbox,
-  Row,
-  Col,
-} from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-const { Option } = Select;
+import { Form, Input, Radio, Button } from 'antd';
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -28,35 +11,13 @@ const formItemLayout = {
   },
 };
 
-//   const normFile = (e) => {
-//     console.log('Upload event:', e);
-
-//     if (Array.isArray(e)) {
-//       return e;
-//     }
-
-//     return e && e.fileList;
-//   };
-
 const SearchInput = () => {
   const onFinish = values => {
     console.log('Received values of form: ', values);
   };
 
   return (
-    <Form
-      name="validate_other"
-      {...formItemLayout}
-      onFinish={onFinish}
-      // initialValues={{
-      //   ['input-number']: 3,
-      //   ['checkbox-group']: ['A', 'B'],
-      //   rate: 3.5,
-      // }}
-    >
-      {/* <Form.Item label="Plain Text">
-          <span className="ant-form-text">Filter applications:</span>
-        </Form.Item> */}
+    <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
       <Form.Item
         label="Name:"
         name="name"
