@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import {} from "antd";
 import ReactDOM from 'react-dom';
-import { Form, Input, Button, Select, Space } from 'antd';
+import { Form, Input, Button, Select, Space, Radio } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
@@ -15,9 +15,8 @@ const suffix = (
   />
 );
 
-const onSearch = value => console.log(value);
-
 const { Option } = Select;
+
 const layout = {
   labelCol: {
     span: 8,
@@ -36,30 +35,18 @@ const tailLayout = {
 const SearchInput = () => {
   const [form] = Form.useForm();
 
-  const onGenderChange = value => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({
-          note: 'Hi, man!',
-        });
-        return;
+  const [radioValue, setRadioValue] = React.useState('');
 
-      case 'female':
-        form.setFieldsValue({
-          note: 'Hi, lady!',
-        });
-        return;
-
-      case 'other':
-        form.setFieldsValue({
-          note: 'Hi there!',
-        });
-        return;
-    }
+  const onChange = e => {
+    console.log('radio checked', e.target.value);
+    setRadioValue(e.target.value);
   };
 
+  const onSearch = value => console.log(value);
+
   const onFinish = values => {
-    console.log(values);
+    console.log('onFinish: ', values);
+    // console.log(radioValue);
   };
 
   const onReset = () => {
@@ -68,8 +55,8 @@ const SearchInput = () => {
 
   const onFill = () => {
     form.setFieldsValue({
-      note: 'Hello world!',
-      gender: 'male',
+      name: 'Hello world!',
+      status: 'interesting',
     });
   };
 
@@ -99,39 +86,11 @@ const SearchInput = () => {
           },
         ]}
       >
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) =>
-          prevValues.gender !== currentValues.gender
-        }
-      >
-        {({ getFieldValue }) => {
-          return getFieldValue('gender') === 'other' ? (
-            <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          ) : null;
-        }}
-      </Form.Item>
-      <Form.Item {...tailLayout}>
+        <Radio.Group onChange={onChange} value={radioValue}>
+          <Radio value={'pending'}>Pending</Radio>
+          <Radio value={'accepted'}>Accepted</Radio>
+          <Radio value={'rejected'}>Rejected</Radio>
+        </Radio.Group>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
