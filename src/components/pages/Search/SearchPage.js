@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import {} from "antd";
 import ReactDOM from 'react-dom';
 import CompactApp from './CompactApp';
 import SearchInput from './SearchInput';
