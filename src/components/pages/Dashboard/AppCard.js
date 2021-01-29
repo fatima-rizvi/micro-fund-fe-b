@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useOktaAuth } from '@okta/okta-react';
 import { useQueryClient } from 'react-query';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-
+import { Form, Input, Row, Col, Button } from 'antd';
 // A custom POST for apps
 // We can't use a react query, because that's for handling
 // Server state, and this doesn't exist in server state yet
@@ -57,6 +56,11 @@ function AppCard() {
     queryClient.invalidateQueries('user');
   };
 
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
   return (
     <>
       <div>
@@ -80,37 +84,58 @@ function AppCard() {
       </div>
 
       <div>
-        <form id="org-applcation-form">
-          <input
-            name="name"
-            value={formState.name}
-            onChange={handleChanges}
-            placeholder="Name"
-          />
-
-          <input
-            name="phone"
-            value={formState.phone}
-            onChange={handleChanges}
-            placeholder="Phone Number"
-          />
-
-          <input
-            name="address"
-            value={formState.address}
-            onChange={handleChanges}
-            placeholder="Address"
-          />
-
-          <input
-            name="reason"
-            value={formState.reason}
-            onChange={handleChanges}
-            placeholder="Reason"
-          />
-
-          <button onClick={onSubmit}> Apply </button>
-        </form>
+        <Form {...layout}>
+          <Form.Item
+            rules={[{ required: true, message: 'Please input your name!' }]}
+          >
+            <Input
+              name="name"
+              value={formState.name}
+              onChange={handleChanges}
+              placeholder="Name"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[
+              { required: true, message: 'Please include your phone number!' },
+            ]}
+          >
+            <Input
+              name="phone"
+              value={formState.phone}
+              onChange={handleChanges}
+              placeholder="Phone Number"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: 'Please input your address!' }]}
+          >
+            <Input
+              name="address"
+              value={formState.address}
+              onChange={handleChanges}
+              placeholder="Address"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: 'Please describe your reason for wishing to join!',
+              },
+            ]}
+          >
+            <Input.TextArea
+              name="reason"
+              value={formState.reason}
+              onChange={handleChanges}
+              placeholder="Reason"
+            />
+          </Form.Item>
+          <Form.Item>
+            <button onClick={onSubmit}> Apply </button>
+          </Form.Item>
+        </Form>
       </div>
     </>
   );
