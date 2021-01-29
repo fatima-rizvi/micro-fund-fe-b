@@ -38,7 +38,9 @@ function RenderHomePage(props) {
 
         <Link to="/AppCard">Apply</Link>
         <br></br>
-        <Link onClick={() => authService.logout()}>Log Out</Link>
+        <Link to="/" onClick={() => authService.logout()}>
+          Log Out
+        </Link>
       </LandingNav>
 
       <Switch>

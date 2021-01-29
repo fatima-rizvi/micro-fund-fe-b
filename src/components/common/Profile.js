@@ -13,7 +13,7 @@ import {
 import { EllipsisOutlined } from '@ant-design/icons';
 import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
 import { useEffect } from 'react';
-import { useUserHook } from '../../hooks';
+import { useUserQuery } from '../../hooks';
 // Styles
 const ProfileStyle = styled.div`
   box-shadow: 2px 2px 2px grey;
@@ -118,7 +118,8 @@ function Profile() {
   // query
   const auth = useOktaAuth();
   //const queryClient = useQueryClient();
-  const [{ isLoading, data, error }, mutation] = useUserHook(auth);
+  const [{ isLoading, data, error }, mutation] = useUserQuery(useOktaAuth());
+  console.log(data);
   //const { isLoading, data, error } = useUserInfo(auth);
 
   // transfer results of query into local state (for editable fields)
