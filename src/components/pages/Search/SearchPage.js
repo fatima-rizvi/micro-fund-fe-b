@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import {} from "antd";
 import ReactDOM from 'react-dom';
 import CompactApp from './CompactApp';
+import SearchInput from './SearchInput';
 import './search.css';
 
 const appData = [
@@ -103,6 +104,7 @@ const appData = [
 function SearchPage() {
   return (
     <div className="search-page">
+      <SearchInput />
       <div className="all-short-apps">
         <div className="short-apps-header">
           <p>Name</p>
