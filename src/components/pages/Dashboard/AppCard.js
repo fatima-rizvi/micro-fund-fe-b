@@ -9,20 +9,20 @@ function AppCard() {
   const { orgid } = useParams();
   const history = useHistory();
   const auth = useOktaAuth();
-  // grab the org name
   const [{ isLoading, data, error }] = useOrgQuery(auth, orgid);
   const [orgName, setOrgName] = useState('');
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setOrgName(data.data.name);
+    }
+  }, [data]);
 
   // seems to work without this, but all examples use it
   const [form] = Form.useForm();
 
   // setup mutation to post
   const mutation = useMutationToPostApp(auth);
-  useEffect(() => {
-    if (!isLoading && !error) {
-      setOrgName(data.data.name);
-    }
-  }, [data]);
+
   // use mutation to post form data
   const onFinish = (values: any) => {
     console.log(values);
