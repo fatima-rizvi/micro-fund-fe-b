@@ -13,6 +13,6 @@ Example use:
 
 */
 
-export { useAppsQuery } from './queryapps';
+export { useAppsQuery, useMutationToPostApp } from './queryapps';
 export { useUserQuery } from './queryuser';
 export { useOrgQuery, useOrgsQuery } from './queryorgs';

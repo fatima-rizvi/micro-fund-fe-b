@@ -25,6 +25,23 @@ function patchApp(auth, appData) {
     .catch(error => console.error(error));
 }
 
+function postApp(auth, appData) {
+  return auth.authService
+    .getAccessToken()
+    .then(token => {
+      return axiosWithAuth(token).post(
+        `/apps/app/new`,
+        JSON.stringify(appData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    })
+    .catch(error => console.error(error));
+}
+
 // returns a mutation function that will update backend
 // with the object given as an argument. it will then
 // invalidate ['apps', orgid] triggering an automatic
@@ -48,4 +65,14 @@ export function useAppsQuery(auth, orgid) {
     useQuery(['apps', orgid], () => getApps(auth, orgid)),
     useMutationForApp(auth, orgid),
   ];
+}
+
+// Mutation to post a new application
+export function useMutationToPostApp(auth) {
+  const queryClient = useQueryClient();
+  return useMutation(appData => postApp(auth, appData), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+    },
+  });
 }

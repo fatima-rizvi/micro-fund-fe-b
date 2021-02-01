@@ -1,44 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
-import { useQueryClient } from 'react-query';
+import { useOrgQuery, useMutationToPostApp } from '../../../hooks';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Form, Input, Row, Col, Button } from 'antd';
-// A custom POST for apps
-// We can't use a react query, because that's for handling
-// Server state, and this doesn't exist in server state yet
-function postAppData(auth, appData) {
-  return (
-    auth.authService
-      .getAccessToken()
-      .then(token => {
-        return axiosWithAuth(token).post(
-          `/apps/app/new`,
-          JSON.stringify(appData),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      })
-      // the user's applications are in the 'user' query
-      // so we, confusingly, need to invalidate that
-      .catch(error => console.error(error))
-  );
-}
+import { Form, Input, Row, Col, Button, Typography, Divider } from 'antd';
+const { Title } = Typography;
 
-// This is just completely wrong.
 function AppCard() {
   const { orgid } = useParams();
   const auth = useOktaAuth();
-  const queryClient = useQueryClient();
+  // grab the org name
+  const { isLoading, data, error } = useOrgQuery(auth, orgid)[0];
+  const [orgName, setOrgName] = useState('');
+  // setup mutation to post appData
+  const mutation = useMutationToPostApp(auth);
   const [formState, setFormState] = useState({
     name: '',
     phone: '',
     address: '',
     reason: '',
+    // throwing in orgid so the relationships setup correctly
+    // when the data is submitted to the back-end
+    organization: { orgid },
   });
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setOrgName(data.data.name);
+    }
+  }, [data]);
 
   const handleChanges = e => {
     let name = e.target.name;
@@ -47,45 +36,23 @@ function AppCard() {
   };
 
   const onSubmit = e => {
-    // React query to submit an application
     e.preventDefault();
-    postAppData(auth, {
-      ...formState,
-      organization: { orgid },
-    });
-    queryClient.invalidateQueries('user');
+    mutation.mutate(formState);
   };
 
   const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
+    layout: 'vertical',
+    size: 'large',
   };
 
   return (
-    <>
-      <div>
-        <h1> Org Name </h1>
-        <p>
-          {' '}
-          userInput_id Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat
-          urna. Morbi a bibendum metus. Donec scelerisque sollicitudin enim eu
-          venenatis. Duis tincidunt laoreet ex, in pretium orci vestibulum eget.
-          Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-          per inceptos himenaeos. Duis pharetra luctus lacus ut vestibulum.
-          Maecenas ipsum lacus, lacinia quis posuere ut, pulvinar vitae dolor.
-          Integer eu nibh at nisi ullamcorper sagittis id vel leo. Integer
-          feugiat faucibus libero, at maximus nisl suscipit posuere. Morbi nec
-          enim nunc. Phasellus bibendum turpis ut ipsum egestas, sed
-          sollicitudin elit convallis. Cras pharetra mi tristique sapien
-          vestibulum lobortis. Nam eget bibendum metus, non dictum mauris. Nulla
-          at tellus sagittis, viverra est a, bibendum metus.
-        </p>
-      </div>
-
-      <div>
+    <Row>
+      <Col span={12} offset={6}>
+        <Title>Apply to {orgName}</Title>
+        <Divider />
         <Form {...layout}>
           <Form.Item
+            label="Full Name: "
             rules={[{ required: true, message: 'Please input your name!' }]}
           >
             <Input
@@ -96,6 +63,7 @@ function AppCard() {
             />
           </Form.Item>
           <Form.Item
+            label="Phone Number: "
             rules={[
               { required: true, message: 'Please include your phone number!' },
             ]}
@@ -108,6 +76,7 @@ function AppCard() {
             />
           </Form.Item>
           <Form.Item
+            label="Address"
             rules={[{ required: true, message: 'Please input your address!' }]}
           >
             <Input
@@ -118,6 +87,7 @@ function AppCard() {
             />
           </Form.Item>
           <Form.Item
+            label="Please Describe the Reason you want to join."
             rules={[
               {
                 required: true,
@@ -130,14 +100,17 @@ function AppCard() {
               value={formState.reason}
               onChange={handleChanges}
               placeholder="Reason"
+              autoSize={{ minRows: 7 }}
             />
           </Form.Item>
           <Form.Item>
-            <button onClick={onSubmit}> Apply </button>
+            <Button onClick={onSubmit} type="primary">
+              Apply
+            </Button>
           </Form.Item>
         </Form>
-      </div>
-    </>
+      </Col>
+    </Row>
   );
 }
 
