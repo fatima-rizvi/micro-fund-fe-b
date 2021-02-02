@@ -130,7 +130,7 @@ function SearchPage() {
 
   return (
     <div className="search-page">
-      <SearchInput setFilter={setFilter} />
+      <SearchInput setFilter={setFilter} filterValues={filterValues} />
       <div className="all-short-apps">
         <div className="short-apps-header">
           <p>Name</p>
