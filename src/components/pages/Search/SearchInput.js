@@ -15,12 +15,25 @@ const formItemLayout = {
 
 const SearchInput = props => {
   //const { setFilterValues } = setFilterValues;
+
+  const [statusValue, setStatus] = useState('');
+
   const onFinish = values => {
     console.log('Received values of form: ', values);
-    props.setFilter(values);
+
+    if (values.status === null) {
+      setStatus('all');
+    } else {
+      setStatus(values.status);
+    }
+
+    // props.setFilter({name: values.name, status: statusValue});
+    props.setFilter({ name: values.name, status: statusValue });
   };
 
   // const { authState } = useOktaAuth();
+
+  console.log(props.filterValues);
 
   return (
     <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
@@ -38,7 +51,7 @@ const SearchInput = props => {
       </Form.Item>
 
       <Form.Item name="status" label="Status">
-        <Radio.Group>
+        <Radio.Group defaultValue="all">
           <Radio value="all">All</Radio>
           <Radio value="not reviewed">Not Reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>

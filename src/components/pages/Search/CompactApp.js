@@ -48,8 +48,10 @@ function CompactApp({ app, filterValues }) {
   }
 
   if (filterValues.status !== 'all') {
-    if (filterValues.status !== null && app.status !== filterValues.status) {
-      return null;
+    if (filterValues.status !== '') {
+      if (filterValues.status !== null && app.status !== filterValues.status) {
+        return null;
+      }
     }
   }
 
