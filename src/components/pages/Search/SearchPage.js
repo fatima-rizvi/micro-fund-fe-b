@@ -110,10 +110,13 @@ function SearchPage() {
   console.log(getProfileData(authState));
 
   const [apps, setAppsState] = useState([]);
+  const [filterValues, setFilter] = useState({ name: '', status: '' });
 
   //https://micro-fund-be-b.herokuapp.com/orgs/org/6/apps
 
   useEffect(() => {
+    console.log('search page use effect:', filterValues);
+
     axios
       .get('https://micro-fund-be-b.herokuapp.com/apps/all')
       .then(res => {
@@ -123,17 +126,11 @@ function SearchPage() {
       .catch(err => {
         console.log('Error: ', err);
       });
-  }, []);
-
-  const [filterValues, setFilterValues] = useState({});
-
-  useEffect(() => {
-    console.log('search page use effect:', filterValues);
   }, [filterValues]);
 
   return (
     <div className="search-page">
-      <SearchInput setFilterValues={setFilterValues} />
+      <SearchInput setFilter={setFilter} />
       <div className="all-short-apps">
         <div className="short-apps-header">
           <p>Name</p>
@@ -141,7 +138,11 @@ function SearchPage() {
           <p>Status</p>
         </div>
         {apps.map(application => (
-          <CompactApp key={application.appid} app={application} />
+          <CompactApp
+            key={application.appid}
+            app={application}
+            filterValues={filterValues}
+          />
         ))}
       </div>
     </div>

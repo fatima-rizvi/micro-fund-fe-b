@@ -17,7 +17,7 @@ const SearchInput = props => {
   //const { setFilterValues } = setFilterValues;
   const onFinish = values => {
     console.log('Received values of form: ', values);
-    props.setFilterValues(values);
+    props.setFilter(values);
   };
 
   // const { authState } = useOktaAuth();
@@ -37,7 +37,7 @@ const SearchInput = props => {
         <Input size="small" placeholder="Enter name..." />
       </Form.Item>
 
-      <Form.Item name="radio-group" label="Status">
+      <Form.Item name="status" label="Status">
         <Radio.Group>
           <Radio value="not reviewed">not reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>
