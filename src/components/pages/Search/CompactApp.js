@@ -4,7 +4,7 @@ import { Modal, Button } from 'antd';
 import './search.css';
 
 function CompactApp({ app }) {
-  console.log(app);
+  // console.log(app);
 
   const [modalState, setModalState] = useState({
     visible: false,
