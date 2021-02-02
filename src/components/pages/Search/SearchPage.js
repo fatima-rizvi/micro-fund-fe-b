@@ -110,7 +110,7 @@ function SearchPage() {
   console.log(getProfileData(authState));
 
   const [apps, setAppsState] = useState([]);
-  const [filterValues, setFilter] = useState({ name: '', status: 'all' });
+  const [filterValues, setFilter] = useState({ name: '', status: '' });
 
   //https://micro-fund-be-b.herokuapp.com/orgs/org/6/apps
 
