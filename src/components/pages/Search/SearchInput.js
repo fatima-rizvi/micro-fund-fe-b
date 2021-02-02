@@ -39,7 +39,8 @@ const SearchInput = props => {
 
       <Form.Item name="status" label="Status">
         <Radio.Group>
-          <Radio value="not reviewed">not reviewed</Radio>
+          <Radio value="all">All</Radio>
+          <Radio value="not reviewed">Not Reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>
           <Radio value="rejected">Rejected</Radio>
         </Radio.Group>
