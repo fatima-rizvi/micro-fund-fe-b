@@ -37,7 +37,7 @@ const SearchInput = () => {
 
       <Form.Item name="radio-group" label="Status">
         <Radio.Group>
-          <Radio value="pending">Pending</Radio>
+          <Radio value="not reviewed">not reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>
           <Radio value="rejected">Rejected</Radio>
         </Radio.Group>
