@@ -125,9 +125,15 @@ function SearchPage() {
       });
   }, []);
 
+  const [filterValues, setFilterValues] = useState({});
+
+  useEffect(() => {
+    console.log('search page use effect:', filterValues);
+  }, [filterValues]);
+
   return (
     <div className="search-page">
-      <SearchInput />
+      <SearchInput setFilterValues={setFilterValues} />
       <div className="all-short-apps">
         <div className="short-apps-header">
           <p>Name</p>

@@ -13,9 +13,11 @@ const formItemLayout = {
   },
 };
 
-const SearchInput = () => {
+const SearchInput = props => {
+  //const { setFilterValues } = setFilterValues;
   const onFinish = values => {
     console.log('Received values of form: ', values);
+    props.setFilterValues(values);
   };
 
   // const { authState } = useOktaAuth();
