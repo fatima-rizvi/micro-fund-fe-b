@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Modal, Button } from 'antd';
 import './search.css';
 
-function CompactApp({ app }) {
+function CompactApp({ app, filterValues }) {
   // console.log(app);
 
   const [modalState, setModalState] = useState({
@@ -33,6 +33,25 @@ function CompactApp({ app }) {
       visible: false,
     });
   };
+
+  console.log('filterVal name', filterValues.name);
+  console.log('filterVal status', filterValues.status);
+
+  if (filterValues.name !== '') {
+    if (
+      filterValues.name !== null &&
+      app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
+        -1
+    ) {
+      return null;
+    }
+  }
+
+  if (filterValues.status !== '') {
+    if (filterValues.status !== null && app.status !== filterValues.status) {
+      return null;
+    }
+  }
 
   return (
     <div>
