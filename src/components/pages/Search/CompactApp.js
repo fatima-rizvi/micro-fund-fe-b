@@ -16,7 +16,7 @@ function CompactApp({ app, filterValues }) {
     });
   };
 
-  const handleOk = e => {
+  const handleAccept = e => {
     setModalState({ ...modalState, loading: true });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
@@ -56,7 +56,7 @@ function CompactApp({ app, filterValues }) {
       <Modal
         visible={modalState.visible}
         title={app.name}
-        onOk={handleOk}
+        onOk={handleAccept}
         onCancel={handleReject}
         centered
         footer={[
@@ -67,7 +67,7 @@ function CompactApp({ app, filterValues }) {
             key="submit"
             type="primary"
             loading={modalState.loading}
-            onClick={handleOk}
+            onClick={handleAccept}
           >
             Accept
           </Button>,
