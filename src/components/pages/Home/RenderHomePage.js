@@ -36,7 +36,7 @@ function RenderHomePage(props) {
         <img src={logo} alt="MicroFund Logo" className="header-logo" />
         <div className="welcome-style"> Welcome back, {userInfo.name}!</div>
 
-        <Link to="/AppCard">Apply</Link>
+        <Link to="/AppCard/4">Apply</Link>
         <br></br>
         <Link to="/" onClick={() => authService.logout()}>
           Log Out

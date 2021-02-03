@@ -1,31 +1,90 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import Form from '../../common/Form';
-import UserDescription from '../../common/UserDescription';
-import logo from '../../../images/microLogo.png';
-
-const AppCardStyle = styled.div`
-  box-shadow: 2px 2px 2px grey;
-  margin: 10px;
-  padding: 10px;
-  background: #d5f2bb;
-  box-szing: boarder-box;
-  height: 100%;
-`;
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import { useOrgQuery, useMutationToPostApp } from '../../../hooks';
+import { Form, Input, Row, Col, Button, Typography, Divider } from 'antd';
+const { Title } = Typography;
 
 function AppCard() {
-  return (
-    <AppCardStyle>
-      <img src={logo} />
-      <h1>Application Form</h1>
-      <Link to="/">
-        <div>Home</div>
-      </Link>
-      <UserDescription />
+  const { orgid } = useParams();
+  const history = useHistory();
+  const auth = useOktaAuth();
+  const [{ isLoading, data, error }] = useOrgQuery(auth, orgid);
+  const [orgName, setOrgName] = useState('');
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setOrgName(data.data.name);
+    }
+  }, [data]);
 
-      <Form />
-    </AppCardStyle>
+  // seems to work without this, but all examples use it
+  const [form] = Form.useForm();
+
+  // setup mutation to post
+  const mutation = useMutationToPostApp(auth);
+
+  // use mutation to post form data
+  const onFinish = (values: any) => {
+    console.log(values);
+    mutation.mutate({ ...values, organization: { orgid } });
+    history.push('/');
+  };
+
+  const layout = {
+    layout: 'vertical',
+    size: 'large',
+  };
+
+  return (
+    <Row>
+      <Col span={12} offset={6}>
+        <Title>Apply to {orgName}</Title>
+        <Divider />
+        <Form {...layout} form={form} onFinish={onFinish}>
+          <Form.Item
+            label="Full Name: "
+            name="name"
+            rules={[{ required: true, message: 'Please input your name!' }]}
+          >
+            <Input placeholder="Your Full Name" />
+          </Form.Item>
+          <Form.Item
+            label="Phone Number: "
+            rules={[{ required: true }]}
+            name="phone"
+          >
+            <Input placeholder="Your Phone Number" />
+          </Form.Item>
+          <Form.Item
+            label="Address"
+            rules={[{ required: true, message: 'Please input your address!' }]}
+            name="address"
+          >
+            <Input placeholder="Your Home Address" />
+          </Form.Item>
+          <Form.Item
+            label="Describe the Reason you want to join."
+            rules={[
+              {
+                required: true,
+                message: 'Please describe your reason for wishing to join!',
+              },
+            ]}
+            name="reason"
+          >
+            <Input.TextArea
+              autoSize={{ minRows: 7 }}
+              placeholder="please take some time to describe the reasons you are applying."
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              Apply
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 
