@@ -17,18 +17,24 @@ const SearchInput = props => {
   //const { setFilterValues } = setFilterValues;
 
   const [statusValue, setStatus] = useState('');
+  const [nameValue, setName] = useState('');
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
 
-    if (values.status === null) {
-      setStatus('all');
-    } else {
-      setStatus(values.status);
-    }
+    // setName(values.name);
+    // setStatus(values.status);
 
-    // props.setFilter({name: values.name, status: statusValue});
-    props.setFilter({ name: values.name, status: statusValue });
+    // if (values.name === null) {
+    //   setName('');
+    // }
+
+    // if (values.status === null) {
+    //   setStatus('all');
+    // }
+
+    props.setFilter({ name: values.name, status: values.status });
+    // props.setFilter({ name: nameValue, status: statusValue });
   };
 
   // const { authState } = useOktaAuth();
@@ -51,7 +57,7 @@ const SearchInput = props => {
       </Form.Item>
 
       <Form.Item name="status" label="Status">
-        <Radio.Group defaultValue="all">
+        <Radio.Group>
           <Radio value="all">All</Radio>
           <Radio value="not reviewed">Not Reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>
