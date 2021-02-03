@@ -12,6 +12,7 @@ const formItemLayout = {
 
 const SearchInput = props => {
   const onFinish = values => {
+    //Update filterValues state so that the useEffect in SearchPage triggers a rerender
     props.setFilter({ name: values.name, status: values.status });
   };
 
