@@ -24,9 +24,10 @@ function CompactApp({ app, filterValues }) {
   };
 
   const handleReject = e => {
-    setModalState({
-      visible: false,
-    });
+    setModalState({ ...modalState, loading: true });
+    setTimeout(() => {
+      setModalState({ loading: false, visible: false });
+    }, 1000);
   };
 
   if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
@@ -60,7 +61,11 @@ function CompactApp({ app, filterValues }) {
         onCancel={handleReject}
         centered
         footer={[
-          <Button key="back" onClick={handleReject}>
+          <Button
+            key="back"
+            onClick={handleReject}
+            loading={modalState.loading}
+          >
             Reject
           </Button>,
           <Button
