@@ -10,28 +10,28 @@ import { getProfileData } from '../../../api';
 import { useAppsQuery } from '../../../hooks';
 
 function SearchPage() {
-  const { authState } = useOktaAuth();
+  /* Lines 14 and 15, to my understanding, will be necessary to use the useAppsQuery to 
+  retrieve all of the applications using the react queries. I'm not yet sure how to 
+  retrieve all of the applications made to a specific organization, but I think
+  the getProfileData hook should be able to return an id or something that can
+  be passed to the neccessary endpoint link. Still figuring that out.*/
 
-  console.log(getProfileData(authState));
+  const { authState } = useOktaAuth();
+  getProfileData(authState);
 
   const [apps, setAppsState] = useState([]);
   const [filterValues, setFilter] = useState({ name: '', status: '' });
 
-  //https://micro-fund-be-b.herokuapp.com/orgs/org/6/apps
-
   useEffect(() => {
-    console.log('search page use effect:', filterValues);
-
     axios
       .get('https://micro-fund-be-b.herokuapp.com/apps/all')
       .then(res => {
-        console.log('Retrieved data from api');
         setAppsState(res.data);
       })
       .catch(err => {
         console.log('Error: ', err);
       });
-  }, [filterValues]);
+  }, [filterValues]); // Rerender the page when the filter values have updated
 
   return (
     <div className="search-page">
@@ -42,6 +42,7 @@ function SearchPage() {
           <p>Organization Name</p>
           <p>Status</p>
         </div>
+        {/* To substitute in the dummyData in dummmySearchData.js, swap "apps" for "dummyData" below  */}
         {apps.map(application => (
           <CompactApp
             key={application.appid}
