@@ -4,8 +4,6 @@ import { Modal, Button } from 'antd';
 import './search.css';
 
 function CompactApp({ app, filterValues }) {
-  // console.log(app);
-
   const [modalState, setModalState] = useState({
     visible: false,
     loading: false,
@@ -19,8 +17,6 @@ function CompactApp({ app, filterValues }) {
   };
 
   const handleOk = e => {
-    console.log(e);
-
     setModalState({ ...modalState, loading: true });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
@@ -28,14 +24,10 @@ function CompactApp({ app, filterValues }) {
   };
 
   const handleSubmit = e => {
-    console.log(e);
     setModalState({
       visible: false,
     });
   };
-
-  console.log('filterVal name', filterValues.name);
-  console.log('filterVal status', filterValues.status);
 
   if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
     if (
