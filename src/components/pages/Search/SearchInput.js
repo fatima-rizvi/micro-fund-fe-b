@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Radio, Button } from 'antd';
-// import { useOktaAuth } from '@okta/okta-react';
-// import { getProfileData } from '../../../api';
-// import { useAppsQuery } from '../../../hooks';
 
 const formItemLayout = {
   labelCol: {
@@ -14,32 +11,9 @@ const formItemLayout = {
 };
 
 const SearchInput = props => {
-  //const { setFilterValues } = setFilterValues;
-
-  const [statusValue, setStatus] = useState('');
-  const [nameValue, setName] = useState('');
-
   const onFinish = values => {
-    console.log('Received values of form: ', values);
-
-    // setName(values.name);
-    // setStatus(values.status);
-
-    // if (values.name === null) {
-    //   setName('');
-    // }
-
-    // if (values.status === null) {
-    //   setStatus('all');
-    // }
-
     props.setFilter({ name: values.name, status: values.status });
-    // props.setFilter({ name: nameValue, status: statusValue });
   };
-
-  // const { authState } = useOktaAuth();
-
-  console.log(props.filterValues);
 
   return (
     <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
