@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import { Modal, Button } from 'antd';
 import './search.css';
 
-function CompactApp({ app }) {
-  console.log(app);
-
+function CompactApp({ app, filterValues }) {
   const [modalState, setModalState] = useState({
     visible: false,
     loading: false,
@@ -18,21 +16,38 @@ function CompactApp({ app }) {
     });
   };
 
-  const handleOk = e => {
-    console.log(e);
-
+  const handleAccept = e => {
     setModalState({ ...modalState, loading: true });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
     }, 1000);
   };
 
-  const handleSubmit = e => {
-    console.log(e);
-    setModalState({
-      visible: false,
-    });
+  const handleReject = e => {
+    setModalState({ ...modalState, loading: true });
+    setTimeout(() => {
+      setModalState({ loading: false, visible: false });
+    }, 1000);
   };
+
+  // Filters out apps based on name
+  if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
+    if (
+      app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
+      -1
+    ) {
+      return null;
+    }
+  }
+
+  // Filters out apps based on status
+  if (filterValues.status !== 'all') {
+    if (filterValues.status !== '') {
+      if (filterValues.status !== null && app.status !== filterValues.status) {
+        return null;
+      }
+    }
+  }
 
   return (
     <div>
@@ -44,18 +59,22 @@ function CompactApp({ app }) {
       <Modal
         visible={modalState.visible}
         title={app.name}
-        onOk={handleOk}
-        onCancel={handleSubmit}
+        onOk={handleAccept}
+        onCancel={handleReject}
         centered
         footer={[
-          <Button key="back" onClick={handleSubmit}>
+          <Button
+            key="back"
+            onClick={handleReject}
+            loading={modalState.loading}
+          >
             Reject
           </Button>,
           <Button
             key="submit"
             type="primary"
             loading={modalState.loading}
-            onClick={handleOk}
+            onClick={handleAccept}
           >
             Accept
           </Button>,

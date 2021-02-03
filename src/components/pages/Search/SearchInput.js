@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Radio, Button } from 'antd';
 
 const formItemLayout = {
@@ -11,9 +10,10 @@ const formItemLayout = {
   },
 };
 
-const SearchInput = () => {
+const SearchInput = props => {
   const onFinish = values => {
-    console.log('Received values of form: ', values);
+    //Update filterValues state so that the useEffect in SearchPage triggers a rerender
+    props.setFilter({ name: values.name, status: values.status });
   };
 
   return (
@@ -31,9 +31,14 @@ const SearchInput = () => {
         <Input size="small" placeholder="Enter name..." />
       </Form.Item>
 
-      <Form.Item name="radio-group" label="Status">
+      <Form.Item
+        name="status"
+        label="Status"
+        rules={[{ required: true, message: 'Select a status' }]}
+      >
         <Radio.Group>
-          <Radio value="pending">Pending</Radio>
+          <Radio value="all">All</Radio>
+          <Radio value="not reviewed">Not Reviewed</Radio>
           <Radio value="accepted">Accepted</Radio>
           <Radio value="rejected">Rejected</Radio>
         </Radio.Group>
