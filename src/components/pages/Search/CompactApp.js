@@ -37,7 +37,7 @@ function CompactApp({ app, filterValues }) {
   console.log('filterVal name', filterValues.name);
   console.log('filterVal status', filterValues.status);
 
-  if (filterValues.name !== '' && filterValues.name !== null) {
+  if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
     if (
       app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
       -1
