@@ -30,6 +30,7 @@ function CompactApp({ app, filterValues }) {
     }, 1000);
   };
 
+  // Filters out apps based on name
   if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
     if (
       app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
@@ -39,6 +40,7 @@ function CompactApp({ app, filterValues }) {
     }
   }
 
+  // Filters out apps based on status
   if (filterValues.status !== 'all') {
     if (filterValues.status !== '') {
       if (filterValues.status !== null && app.status !== filterValues.status) {
