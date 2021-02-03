@@ -19,7 +19,6 @@ const LandingNav = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   box-shadow: 2px 2px 2px grey;
-  background: #d5f2bb;
   text-align: center;
   margin: 10px;
   padding: 10px;
@@ -36,7 +35,6 @@ function RenderHomePage(props) {
         <img src={logo} alt="MicroFund Logo" className="header-logo" />
         <div className="welcome-style"> Welcome back, {userInfo.name}!</div>
 
-        <Link to="/AppCard/4">Apply</Link>
         <br></br>
         <Link to="/" onClick={() => authService.logout()}>
           Log Out

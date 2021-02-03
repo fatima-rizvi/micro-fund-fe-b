@@ -8,7 +8,6 @@ const FooterStyle = styled.div`
   box-shadow: 2px 2px 2px grey;
   margin: 10px;
   padding: 10px;
-  background: #d5f2bb;
 `;
 
 function Footer() {
