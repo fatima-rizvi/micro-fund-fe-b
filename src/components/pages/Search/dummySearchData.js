@@ -1,3 +1,7 @@
+/* Created dummyData that matches the structure of the data returned from 
+the backend exactly. The purpose of this is to test the filter against a 
+larger data set and against multiple statuses.*/
+
 const dummyData = [
   {
     appid: 9,
