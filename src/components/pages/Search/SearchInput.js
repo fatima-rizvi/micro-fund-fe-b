@@ -56,7 +56,11 @@ const SearchInput = props => {
         <Input size="small" placeholder="Enter name..." />
       </Form.Item>
 
-      <Form.Item name="status" label="Status">
+      <Form.Item
+        name="status"
+        label="Status"
+        rules={[{ required: true, message: 'Select a status' }]}
+      >
         <Radio.Group>
           <Radio value="all">All</Radio>
           <Radio value="not reviewed">Not Reviewed</Radio>
