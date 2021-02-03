@@ -8,14 +8,14 @@ import { useOktaAuth } from '@okta/okta-react';
 import { getProfileData } from '../../../api';
 import { useAppsQuery } from '../../../hooks';
 
-const appData = [
+const dummyData = [
   {
     appid: 9,
-    name: 'Org 1',
+    name: 'Clara Oswald',
     address: '123 somewhere drive',
     phone: '923-567-8965',
     reason: 'i want to help my community',
-    status: 'not reviewed',
+    status: 'accepted',
     organization: {
       orgid: 4,
       name: 'Organization 1',
@@ -42,7 +42,7 @@ const appData = [
   },
   {
     appid: 10,
-    name: 'Org 2',
+    name: 'Donna Noble',
     address: '124 rainbow lane',
     phone: '444-111-3333',
     reason: 'i have a great idea i need help with',
@@ -73,11 +73,11 @@ const appData = [
   },
   {
     appid: 12,
-    name: 'Org 3',
+    name: 'Davros',
     address: '534 abbey road',
     phone: '000-345-9807',
     reason: 'i would love to be a part of this',
-    status: 'not reviewed',
+    status: 'rejected',
     organization: {
       orgid: 6,
       name: 'Organization 3',
@@ -97,6 +97,223 @@ const appData = [
           role: {
             roleid: 3,
             name: 'PARTNER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 13,
+    name: 'Amy Pond',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'accepted',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 14,
+    name: 'Rose Tyler',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'not reviewed',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 15,
+    name: 'Jack Harkness',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'rejected',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 16,
+    name: 'Rory Williams',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'accepted',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 17,
+    name: 'Martha Jones',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'not reviewed',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 18,
+    name: 'Sarah Janes Smith',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'accepted',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
+          },
+        },
+      ],
+    },
+  },
+  {
+    appid: 19,
+    name: 'Harriet Jones',
+    address: '123 somewhere drive',
+    phone: '923-567-8965',
+    reason: 'i want to help my community',
+    status: 'rejected',
+    organization: {
+      orgid: 4,
+      name: 'Organization 1',
+      address: '456 greenville drive, longtucky, ark 80067',
+      phone: '567-890-2234',
+    },
+    user: {
+      userid: 8,
+      username: 'coolorg@lambdaschool.local',
+      address: null,
+      phone: null,
+      imageUrl: null,
+      description: null,
+      useremails: [],
+      roles: [
+        {
+          role: {
+            roleid: 2,
+            name: 'USER',
           },
         },
       ],
