@@ -23,7 +23,7 @@ function CompactApp({ app, filterValues }) {
     }, 1000);
   };
 
-  const handleSubmit = e => {
+  const handleReject = e => {
     setModalState({
       visible: false,
     });
@@ -57,10 +57,10 @@ function CompactApp({ app, filterValues }) {
         visible={modalState.visible}
         title={app.name}
         onOk={handleOk}
-        onCancel={handleSubmit}
+        onCancel={handleReject}
         centered
         footer={[
-          <Button key="back" onClick={handleSubmit}>
+          <Button key="back" onClick={handleReject}>
             Reject
           </Button>,
           <Button
