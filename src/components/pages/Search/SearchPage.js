@@ -5,33 +5,25 @@ import CompactApp from './CompactApp';
 import SearchInput from './SearchInput';
 import './search.css';
 import dummyData from './dummySearchData';
-import { useOktaAuth } from '@okta/okta-react';
-import { getProfileData } from '../../../api';
-import { useAppsQuery } from '../../../hooks';
+import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useAppsQuery, useUserQuery } from '../../../hooks';
 
-function SearchPage() {
-  /* Lines 14 and 15, to my understanding, will be necessary to use the useAppsQuery to 
-  retrieve all of the applications using the react queries. I'm not yet sure how to 
-  retrieve all of the applications made to a specific organization, but I think
-  the getProfileData hook should be able to return an id or something that can
-  be passed to the neccessary endpoint link. Still figuring that out.*/
-
-  const { authState } = useOktaAuth();
-  getProfileData(authState);
-
+function SearchPage({ orgId }) {
+  // passing orgId down from the parent component, because I don't see
+  // an easy way to get data from one hook and use it in another hook
+  const auth = useOktaAuth();
+  const [{ data, isLoading, error }, mutation] = useAppsQuery(auth, orgId);
   const [apps, setAppsState] = useState([]);
   const [filterValues, setFilter] = useState({ name: '', status: '' });
 
   useEffect(() => {
-    axios
-      .get('https://micro-fund-be-b.herokuapp.com/apps/all')
-      .then(res => {
-        setAppsState(res.data);
-      })
-      .catch(err => {
-        console.log('Error: ', err);
-      });
-  }, [filterValues]); // Rerender the page when the filter values have updated
+    if (data) {
+      setAppsState(data.data);
+    }
+  }, [data]);
+  if (error) {
+    console.error(error);
+  }
 
   return (
     <div className="search-page">
@@ -48,6 +40,7 @@ function SearchPage() {
             key={application.appid}
             app={application}
             filterValues={filterValues}
+            mutation={mutation}
           />
         ))}
       </div>

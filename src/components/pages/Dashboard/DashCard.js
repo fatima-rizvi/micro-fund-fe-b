@@ -29,9 +29,12 @@ function DashCard() {
       <Profile />
       {/* Only partners/admins should see the dashcard
           however I'm leaving this as USER because there
-          are no partners/admins that you can log in as */}
+          are no partners/admins that you can log in as
+          ALSO, just grabbing the first org's orgid because
+          a person should only ever be part of one org
+                  data.data.organizations[0].orgid || {} */}
       {data.data.roles.filter(r => r.role.name == 'USER').length > 0 && (
-        <SearchPage />
+        <SearchPage orgId={5} />
       )}
       {data.data.roles.filter(r => r.role.name == 'USER').length > 0 && (
         <OrgCards />
