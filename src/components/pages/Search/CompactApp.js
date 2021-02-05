@@ -55,9 +55,15 @@ function CompactApp({ app, filterValues, mutation }) {
   return (
     <div>
       <Button type="primary" onClick={showModal} className="short-app">
-        <p>{app.name}</p>
-        <p>{app.organization.name}</p>
-        <p>{app.status}</p>
+        <div className="app-name">
+          <p>{app.name}</p>
+        </div>
+        <div className="app-org">
+          <p>{app.organization.name}</p>
+        </div>
+        <div className="app-status">
+          <p>{app.status}</p>
+        </div>
       </Button>
       <Modal
         visible={modalState.visible}
