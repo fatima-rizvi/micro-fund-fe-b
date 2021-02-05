@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrgQuery, useUserQuery } from '../../../hooks';
-import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useOktaAuth } from '@okta/okta-react';
 import styled from 'styled-components';
 import OrgComponent from '../../common/Org';
 import '../../../styles/theme-overrides';

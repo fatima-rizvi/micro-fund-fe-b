@@ -1,4 +1,4 @@
-import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useOktaAuth } from '@okta/okta-react';
 import { Button, Space } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import Title from 'antd/lib/typography/Title';
@@ -36,14 +36,15 @@ export default props => {
   // mutations
   const patchUser = () => {
     console.log(`saving user ${data?.data?.userid}`);
-    return axiosWithAuth(
-      auth.authState.accessToken
-    ).patch(`users/user/${data?.data?.userid}`, {
-      username: name,
-      description,
-      imageUrl,
-      userid: data?.data?.userid,
-    });
+    return axiosWithAuth(auth.authState.accessToken).patch(
+      `users/user/${data?.data?.userid}`,
+      {
+        username: name,
+        description,
+        imageUrl,
+        userid: data?.data?.userid,
+      }
+    );
   };
 
   const mutation = useMutation(patchUser, {

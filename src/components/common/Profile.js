@@ -11,7 +11,7 @@ import {
   Collapse,
 } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
-import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useOktaAuth } from '@okta/okta-react';
 import { useEffect } from 'react';
 import { useUserQuery } from '../../hooks';
 // Styles
