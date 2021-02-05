@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrgsQuery, useUserQuery } from '../../hooks';
-import { useOktaAuth } from '@okta/okta-react/dist/OktaContext';
+import { useOktaAuth } from '@okta/okta-react';
 import styled from 'styled-components';
 import OrgComponent from './Org';
 import { Card, Row, Col, Space, Typography } from 'antd';
