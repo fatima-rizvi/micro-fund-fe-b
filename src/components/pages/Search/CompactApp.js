@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Modal, Button } from 'antd';
 import './search.css';
 
-function CompactApp({ app, filterValues }) {
+function CompactApp({ app, filterValues, mutation }) {
   const [modalState, setModalState] = useState({
     visible: false,
     loading: false,
@@ -18,6 +18,7 @@ function CompactApp({ app, filterValues }) {
 
   const handleAccept = e => {
     setModalState({ ...modalState, loading: true });
+    mutation.mutate({ ...app, status: 'accepted' });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
     }, 1000);
@@ -25,6 +26,7 @@ function CompactApp({ app, filterValues }) {
 
   const handleReject = e => {
     setModalState({ ...modalState, loading: true });
+    mutation.mutate({ ...app, status: 'rejected' });
     setTimeout(() => {
       setModalState({ loading: false, visible: false });
     }, 1000);

@@ -27,12 +27,19 @@ function DashCard() {
     <DashCardStyle>
       <h2>user_id dashboard</h2>
       <Profile />
-      {/* Only partners/admins should see the dashcard
-          however I'm leaving this as USER because there
-          are no partners/admins that you can log in as */}
-      {data.data.roles.filter(r => r.role.name == 'USER').length > 0 && (
-        <SearchPage />
+      {/* Only partners/admins should see the dashcard however
+          none of the test users are PARTNER's or part of any
+          organization, so I'm hard-coding in orgId of 5.
+          Should be able to replace the ternary operator with
+          `&&`, and delete the last line to 'fix' this.
+      */}
+      {data.data.roles.filter(r => r.role.name == 'PARTNER').length > 0 &&
+      data.data.organizations[0] > 0 ? (
+        <SearchPage orgId={data.data.organizations[0].orgid || {}} />
+      ) : (
+        <SearchPage orgId={5} />
       )}
+
       {data.data.roles.filter(r => r.role.name == 'USER').length > 0 && (
         <OrgCards />
       )}

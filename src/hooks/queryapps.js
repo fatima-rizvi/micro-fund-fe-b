@@ -20,7 +20,10 @@ function patchApp(auth, appData) {
   return auth.authService
     .getAccessToken()
     .then(token => {
-      return axiosWithAuth(token).patch(`apps/app/${appData.appid}`, appData);
+      return axiosWithAuth(token).patch(
+        `apps/app/${appData.appid}/status`,
+        appData
+      );
     })
     .catch(error => console.error(error));
 }
