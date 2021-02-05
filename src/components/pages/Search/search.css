@@ -29,25 +29,29 @@
     font-weight: bold;
 }
 
-.short-app {
+.apps-container {
     width: 60%;
     margin: auto;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
-    color: black;
-    background-color: #ffffff;
-    border: 2px solid rgb(75, 135, 247);
 }
 
-.short-app:hover {
-    width: 60%;
+.short-app {
+    width: 100%;
     margin: auto;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
+    text-align: left;
+    color: black;
+    background-color: #ffffff;
+    display: inline-grid;
+    grid-template-columns: 40% 45% 15%;
+}
+
+.app-name {
+    text-align: left;
+}
+
+.app-org {
+    text-align: left;
+}
+
+.app-status {
+    text-align: right;
 }

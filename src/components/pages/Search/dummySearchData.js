@@ -105,7 +105,7 @@ const dummyData = [
     status: 'accepted',
     organization: {
       orgid: 4,
-      name: 'Organization 1',
+      name: 'Organization 4',
       address: '456 greenville drive, longtucky, ark 80067',
       phone: '567-890-2234',
     },
@@ -136,7 +136,7 @@ const dummyData = [
     status: 'not reviewed',
     organization: {
       orgid: 4,
-      name: 'Organization 1',
+      name: 'Organization 4',
       address: '456 greenville drive, longtucky, ark 80067',
       phone: '567-890-2234',
     },
@@ -167,7 +167,7 @@ const dummyData = [
     status: 'rejected',
     organization: {
       orgid: 4,
-      name: 'Organization 1',
+      name: 'Organization 2',
       address: '456 greenville drive, longtucky, ark 80067',
       phone: '567-890-2234',
     },
@@ -198,7 +198,7 @@ const dummyData = [
     status: 'accepted',
     organization: {
       orgid: 4,
-      name: 'Organization 1',
+      name: 'Organization 3',
       address: '456 greenville drive, longtucky, ark 80067',
       phone: '567-890-2234',
     },
@@ -229,7 +229,7 @@ const dummyData = [
     status: 'not reviewed',
     organization: {
       orgid: 4,
-      name: 'Organization 1',
+      name: 'Organization 2',
       address: '456 greenville drive, longtucky, ark 80067',
       phone: '567-890-2234',
     },
@@ -253,7 +253,7 @@ const dummyData = [
   },
   {
     appid: 18,
-    name: 'Sarah Janes Smith',
+    name: 'Sarah Jane Smith',
     address: '123 somewhere drive',
     phone: '923-567-8965',
     reason: 'i want to help my community',

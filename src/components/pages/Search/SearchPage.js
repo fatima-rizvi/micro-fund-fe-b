@@ -34,15 +34,17 @@ function SearchPage({ orgId }) {
           <p>Organization Name</p>
           <p>Status</p>
         </div>
-        {/* To substitute in the dummyData in dummmySearchData.js, swap "apps" for "dummyData" below  */}
-        {apps.map(application => (
-          <CompactApp
-            key={application.appid}
-            app={application}
-            filterValues={filterValues}
-            mutation={mutation}
-          />
-        ))}
+        <div className="apps-container">
+          {/* To substitute in the dummyData in dummmySearchData.js, swap "apps" for "dummyData" below  */}
+          {apps.map(application => (
+            <CompactApp
+              key={application.appid}
+              app={application}
+              filterValues={filterValues}
+              mutation={mutation}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

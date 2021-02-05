@@ -33,30 +33,37 @@ function CompactApp({ app, filterValues, mutation }) {
   };
 
   // Filters out apps based on name
-  if (filterValues.name !== '' && typeof filterValues.name !== 'undefined') {
-    if (
-      app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
+  if (
+    filterValues.name !== '' &&
+    typeof filterValues.name !== 'undefined' &&
+    app.name.toLowerCase().indexOf(filterValues.name.toLowerCase().trim()) ===
       -1
-    ) {
-      return null;
-    }
+  ) {
+    return null;
   }
 
   // Filters out apps based on status
-  if (filterValues.status !== 'all') {
-    if (filterValues.status !== '') {
-      if (filterValues.status !== null && app.status !== filterValues.status) {
-        return null;
-      }
-    }
+  if (
+    filterValues.status !== 'all' &&
+    filterValues.status !== '' &&
+    filterValues.status !== null &&
+    app.status !== filterValues.status
+  ) {
+    return null;
   }
 
   return (
     <div>
       <Button type="primary" onClick={showModal} className="short-app">
-        <p>{app.name}</p>
-        <p>{app.organization.name}</p>
-        <p>{app.status}</p>
+        <div className="app-name">
+          <p>{app.name}</p>
+        </div>
+        <div className="app-org">
+          <p>{app.organization.name}</p>
+        </div>
+        <div className="app-status">
+          <p>{app.status}</p>
+        </div>
       </Button>
       <Modal
         visible={modalState.visible}
